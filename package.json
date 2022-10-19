@@ -27,6 +27,7 @@
     "codemirror": "^6.0.1",
     "immer": "^9.0.15",
     "lodash-es": "^4.17.21",
+    "purple-js-sandbox": "^1.0.14",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "use-immer": "^0.7.0"

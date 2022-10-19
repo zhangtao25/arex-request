@@ -9,6 +9,7 @@ import LensesHeadersRenderer from './HeadersRenderer';
 import JSONLensRenderer from './renderers/JSONLensRenderer';
 import RawLensRenderer from './renderers/RawLensRenderer';
 import {css} from "@emotion/react";
+import TestResult from "../http/TestResult";
 
 const LensesResponseBodyRenderer: FC<{ response: HoppRESTResponse }> = ({ response }) => {
   // const jsonResponse = useRef(null);
@@ -34,6 +35,11 @@ const LensesResponseBodyRenderer: FC<{ response: HoppRESTResponse }> = ({ respon
       label: 'Headers',
       key: '2',
       children: <LensesHeadersRenderer headers={response.headers} />,
+    },
+    {
+      label: 'Result',
+      key: '3',
+      children: <TestResult />,
     },
   ];
   return (

@@ -7,6 +7,7 @@ import AgentAxios from '../../helpers/request';
 import { getValueByPath } from '../../helpers/utils/locale';
 import { HttpContext } from '../../index';
 import SmartEnvInput from '../smart/EnvInput';
+import {runTestScript} from "../../helpers/sandbox";
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -80,6 +81,13 @@ const HttpRequest = ({ updateRequest }) => {
     });
 
     const start = new Date().getTime();
+
+
+    console.log(store.request.testscript)
+
+
+
+
     AgentAxios({
       method: store.request.method,
       url: urlPretreatment(store.request.endpoint),
@@ -114,6 +122,15 @@ const HttpRequest = ({ updateRequest }) => {
           type: 'setResponseBody',
           payload: JSON.stringify(res.data),
         });
+
+        runTestScript(store.request.testscript,{body:res.data,headers:[],status:200}).then(r=>{
+          console.log(r)
+          dispatch({
+            type: 'setTestresult',
+            payload: r,
+          });
+        })
+
         dispatch({
           type: 'setResponseHeaders',
           payload: res.headers,

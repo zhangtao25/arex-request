@@ -30,7 +30,7 @@ const defaultState = {
       contentType: 'application/json',
       body: '',
     },
-    testScript: '',
+    testscript: '',
     method: '',
     auth: {
       authURL: 'http://petstore.swagger.io/api/oauth/dialog',
@@ -59,6 +59,9 @@ const defaultState = {
       message: '',
       stack: '',
     },
+  },
+  testresult: {
+
   },
   locale: en,
 };
@@ -89,6 +92,12 @@ const EvaRequestComponent: FC<EvaRequestComponentProps> = ({ locale,updateReques
   const data = {
     _id: '633ac99c3dfa7510a140c53c',
     endpoint: 'http://qingkong.rico.org.cn/api/cov/calendar',
+    testscript: `
+
+// Check status code is 200
+pw.test("Status code is 200", ()=> {
+    pw.expect(pw.response.body[0].id).toBe(1);
+});`,
     method: 'GET',
     params: [
       { key: 'name', value: 'zt', active: true },
