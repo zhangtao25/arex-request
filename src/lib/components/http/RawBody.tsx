@@ -11,10 +11,10 @@ const HttpRawBody = ({ data, cRef }) => {
   const rawBodyParameters = useRef(null);
   const { store, dispatch } = useContext(HttpContext);
   useEffect(() => {
-    dispatch({
-      type: 'setRawParamsBody',
-      payload: data?.body,
-    });
+    // dispatch({
+    //   type: 'request.body.body',
+    //   payload: data?.body,
+    // });
   }, [data]);
 
   useCodeMirror({
@@ -24,7 +24,7 @@ const HttpRawBody = ({ data, cRef }) => {
     extensions: [json()],
     onChange: (val) => {
       dispatch({
-        type: 'setRequestBodyBody',
+        type: 'request.body.body',
         payload: val,
       });
     },
@@ -41,10 +41,10 @@ const HttpRawBody = ({ data, cRef }) => {
   });
   const prettifyRequestBody = () => {
     const jsonObj = JSON.parse(store.request.body.body);
-    dispatch({
-      type: 'setRequestBodyBody',
-      payload: JSON.stringify(jsonObj, null, 2),
-    });
+    // dispatch({
+    //   type: 'setRequestBodyBody',
+    //   payload: JSON.stringify(jsonObj, null, 2),
+    // });
   };
 
   const handleName = (e) => {};

@@ -20,13 +20,14 @@ const HttpHeaders = () => {
 
   useEffect(() => {
     dispatch({
-      type: 'setRequestHeaders',
+      type: 'request.headers',
       payload: requestHeaders,
     });
   }, [requestHeaders]);
   return (
     <div>
       <FormHeader update={setRequestHeaders} />
+      <div>{JSON.stringify(requestHeaders)}</div>
       <FormTable
         bordered
         size='small'

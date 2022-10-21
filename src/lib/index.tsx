@@ -18,9 +18,6 @@ const localeObj = {
 export const HttpContext = createContext({});
 
 const defaultState = {
-  endpoint: '',
-  method: '',
-  rawParamsBody: '',
   request: {
     preRequestScript: '',
     v: '',
@@ -30,7 +27,7 @@ const defaultState = {
       contentType: 'application/json',
       body: '',
     },
-    testscript: '',
+    testScript: '',
     method: '',
     auth: {
       authURL: 'http://petstore.swagger.io/api/oauth/dialog',
@@ -48,7 +45,7 @@ const defaultState = {
   response: {
     type: 'success',
     headers: [],
-    statuscode: 200,
+    statusCode: 200,
     body: '',
     meta: {
       responseSize: 0,
@@ -60,21 +57,43 @@ const defaultState = {
       stack: '',
     },
   },
-  testresult: {
+  testResult: {
 
   },
   locale: en,
 };
+// settestResult.age
+// function reducer(state = defaultState, action) {
+//
+//   // TODO 优化一下
+//   // p({
+//   // payload:'zhi'
+//   //  path:'testResult.age'
+//   // })
+//   function underline(str) {
+//     return str.replace(/\B([A-Z])/g, '_$1').toLowerCase();
+//   }
+//   const clonestate = JSON.parse(JSON.stringify(state));
+//
+//   const arr = underline(action.type).split('_');
+//
+//   _.set(clonestate, arr.slice(1, arr.length).join('.'), action.payload);
+//   return clonestate;
+// }
 
 function reducer(state = defaultState, action) {
-  function underline(str) {
-    return str.replace(/\B([A-Z])/g, '_$1').toLowerCase();
-  }
+
+  // TODO 优化一下
+  // p({
+  // payload:'zhi'
+  //  path:'testResult.age'
+  // })
+
   const clonestate = JSON.parse(JSON.stringify(state));
 
-  const arr = underline(action.type).split('_');
 
-  _.set(clonestate, arr.slice(1, arr.length).join('.'), action.payload);
+  _.set(clonestate, action.type, action.payload);
+  // console.log({clonestate},action)
   return clonestate;
 }
 
@@ -92,7 +111,7 @@ const EvaRequestComponent: FC<EvaRequestComponentProps> = ({ locale,updateReques
   const data = {
     _id: '633ac99c3dfa7510a140c53c',
     endpoint: 'http://qingkong.rico.org.cn/api/cov/calendar',
-    testscript: `
+    testScript: `
 
 // Check status code is 200
 pw.test("Status code is 200", ()=> {
@@ -115,12 +134,12 @@ pw.test("Status code is 200", ()=> {
 
   useEffect(() => {
     dispatch({
-      type: 'setLocale',
+      type: 'locale',
       payload: localeObj[locale],
     });
 
     dispatch({
-      type: 'setRequest',
+      type: 'request',
       payload: data,
     });
   }, [locale]);
@@ -134,9 +153,11 @@ pw.test("Status code is 200", ()=> {
         vertical={true}
       >
         <Allotment.Pane preferredSize={400}>
-          {JSON.stringify(store.request)}
-          <HttpRequest updateRequest={updateRequest}></HttpRequest>
-          <HttpRequestOptions data={data}></HttpRequestOptions>
+          <div>
+            {JSON.stringify(store.request)}
+            <HttpRequest updateRequest={updateRequest}></HttpRequest>
+            <HttpRequestOptions data={data}></HttpRequestOptions>
+          </div>
         </Allotment.Pane>
         <Allotment.Pane>
           <HttpResponse />

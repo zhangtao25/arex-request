@@ -19,7 +19,7 @@ const HttpParameters = () => {
 
   useEffect(() => {
     dispatch({
-      type: 'setRequestParams',
+      type: 'request.params',
       payload: requestParams,
     });
   }, [requestParams]);

@@ -76,7 +76,7 @@ const HttpRequest = ({ updateRequest }) => {
     );
     // return
     dispatch({
-      type: 'setResponseType',
+      type: 'response.type',
       payload: 'loading',
     });
 
@@ -114,30 +114,43 @@ const HttpRequest = ({ updateRequest }) => {
         console.log(res, 'res');
 
         dispatch({
-          type: 'setResponseType',
+          type: 'response.type',
           payload: 'success',
         });
 
         dispatch({
-          type: 'setResponseBody',
+          type: 'response.body',
           payload: JSON.stringify(res.data),
         });
 
-        runTestScript(store.request.testscript,{body:res.data,headers:[],status:200}).then(r=>{
+        runTestScript(store.request.testScript,{body:res.data,headers:[],status:200}).then(r=>{
           console.log(r)
           dispatch({
-            type: 'setTestresult',
+            type: 'testResult',
             payload: r,
           });
         })
 
+        // fetch('http://localhost:3000/test',{
+        //   method:'POST',
+        //   headers:{
+        //     'content-type': 'application/json'
+        //   },
+        //   body:JSON.stringify({
+        //     code:store.request.testscript,
+        //     response:{body:res.data,headers:[],status:200}
+        //   })
+        // }).then(res1=>res1.json()).then(res1=>{
+        //   console.log(res1)
+        // })
+
         dispatch({
-          type: 'setResponseHeaders',
+          type: 'response.headers',
           payload: res.headers,
         });
 
         dispatch({
-          type: 'setResponseMeta',
+          type: 'response.meta',
           payload: {
             responseSize: JSON.stringify(res.data).length,
             responseDuration: end - start,
@@ -145,7 +158,7 @@ const HttpRequest = ({ updateRequest }) => {
         });
 
         dispatch({
-          type: 'setResponseStatuscode',
+          type: 'response.statusCode',
           payload: res.status,
         });
       }, 200);
@@ -194,7 +207,7 @@ const HttpRequest = ({ updateRequest }) => {
           options={methods.map((i) => ({ value: i, lable: i }))}
           onChange={(value) => {
             dispatch({
-              type: 'setRequestMethod',
+              type: 'request.method',
               payload: value,
             });
           }}
