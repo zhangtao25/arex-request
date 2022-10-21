@@ -9,6 +9,7 @@ import { HttpContext } from '../../index';
 import { getValueByPath } from '../../helpers/utils/locale';
 import { useCodeMirror } from '../../helpers/editor/codemirror';
 import { json } from '@codemirror/lang-json';
+import {javascript} from "@codemirror/lang-javascript";
 
 export const ResponseTestHeader = styled.div`
   display: flex;
@@ -80,7 +81,7 @@ arex.test("Status code is 200", ()=> {
     container: codeCm.current,
     value: store.request.testScript,
     height: '300px',
-    extensions: [json()],
+    extensions: [javascript()],
     onChange: (val) => {
       console.log(val,'va')
       dispatch({

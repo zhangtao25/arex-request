@@ -27,7 +27,6 @@ const HttpHeaders = () => {
   return (
     <div>
       <FormHeader update={setRequestHeaders} />
-      <div>{JSON.stringify(requestHeaders)}</div>
       <FormTable
         bordered
         size='small'
