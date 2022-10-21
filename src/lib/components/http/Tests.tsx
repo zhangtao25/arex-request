@@ -10,6 +10,7 @@ import { getValueByPath } from '../../helpers/utils/locale';
 import { useCodeMirror } from '../../helpers/editor/codemirror';
 import { json } from '@codemirror/lang-json';
 import {javascript} from "@codemirror/lang-javascript";
+import { githubLight, githubDark } from '@uiw/codemirror-theme-github';
 
 export const ResponseTestHeader = styled.div`
   display: flex;
@@ -80,8 +81,9 @@ arex.test("Status code is 200", ()=> {
   useCodeMirror({
     container: codeCm.current,
     value: store.request.testScript,
-    height: '300px',
+    height: '100%',
     extensions: [javascript()],
+    theme:githubLight,
     onChange: (val) => {
       console.log(val,'va')
       dispatch({

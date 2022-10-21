@@ -153,8 +153,8 @@ pw.test("Status code is 200", ()=> {
         vertical={true}
       >
         <Allotment.Pane preferredSize={400}>
-          <div>
-            {JSON.stringify(store.request)}
+          <div css={css`height: 100%;display: flex;flex-direction: column`}>
+            {/*{JSON.stringify(store.request)}*/}
             <HttpRequest updateRequest={updateRequest}></HttpRequest>
             <HttpRequestOptions data={data}></HttpRequestOptions>
           </div>
