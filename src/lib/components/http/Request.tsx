@@ -7,7 +7,8 @@ import AgentAxios from '../../helpers/request';
 import { getValueByPath } from '../../helpers/utils/locale';
 import { HttpContext } from '../../index';
 import SmartEnvInput from '../smart/EnvInput';
-import {runTestScript} from "../../helpers/sandbox";
+import { runTestScript } from '../../helpers/sandbox';
+import {treeFind, treeFindPath} from "../../helpers/collection/util";
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -42,7 +43,7 @@ const methods = [
   'CUSTOM',
 ];
 
-const HttpRequest = ({ updateRequest }) => {
+const HttpRequest = ({ currentRequestId, onEdit,collectionTreeData }) => {
   const { store, dispatch } = useContext(HttpContext);
   const t = (key) => getValueByPath(store.locale, key);
 
@@ -82,11 +83,7 @@ const HttpRequest = ({ updateRequest }) => {
 
     const start = new Date().getTime();
 
-
-    console.log(store.request.testscript)
-
-
-
+    console.log(store.request.testscript);
 
     AgentAxios({
       method: store.request.method,
@@ -123,13 +120,15 @@ const HttpRequest = ({ updateRequest }) => {
           payload: JSON.stringify(res.data),
         });
 
-        runTestScript(store.request.testScript,{body:res.data,headers:[],status:200}).then(r=>{
-          console.log(r)
-          dispatch({
-            type: 'testResult',
-            payload: r,
-          });
-        })
+        runTestScript(store.request.testScript, { body: res.data, headers: [], status: 200 }).then(
+          (r) => {
+            console.log(r);
+            dispatch({
+              type: 'testResult',
+              payload: r,
+            });
+          },
+        );
 
         // fetch('http://localhost:3000/test',{
         //   method:'POST',
@@ -176,15 +175,11 @@ const HttpRequest = ({ updateRequest }) => {
           justify-content: space-between;
         `}
       >
+        {/*{*/}
+        {/*  JSON.stringify(treeFindPath(collectionTreeData,(node)=>node.key === currentRequestId))*/}
+        {/*}*/}
         <Breadcrumb style={{ paddingBottom: '14px' }}>
-          {[
-            {
-              title: 'user',
-            },
-            {
-              title: 'getuserinfo',
-            },
-          ].map((i, index) => (
+          {treeFindPath(collectionTreeData,(node)=>node.key === currentRequestId).map((i, index) => (
             <Breadcrumb.Item key={index}>{i.title}</Breadcrumb.Item>
           ))}
         </Breadcrumb>
@@ -192,7 +187,14 @@ const HttpRequest = ({ updateRequest }) => {
           <Button
             onClick={() => {
               // upda
-              updateRequest().then((res) => {
+              console.log(store.request, 'q');
+              onEdit({
+                type: 'update',
+                payload: {
+                  ...store.request,
+                  id: currentRequestId,
+                },
+              }).then((res) => {
                 console.log(res);
               });
             }}

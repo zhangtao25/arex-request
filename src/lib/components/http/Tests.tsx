@@ -108,7 +108,7 @@ arex.test("Status code is 200", ()=> {
   return (
     <>
       <ResponseTestHeader>
-        <span>{t('http.javaScriptCode')}</span>
+        <span>{t('preRequest.javascript_code')}</span>
         <div>
           <Tooltip title={t('help')}>
             <Button disabled type='text' icon={<QuestionCircleOutlined />} />

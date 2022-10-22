@@ -4,7 +4,7 @@ import HttpRequest from './components/http/Request';
 import 'allotment/dist/style.css';
 import 'antd/dist/antd.css';
 import HttpRequestOptions from './components/http/RequestOptions';
-import { createContext, FC, useEffect, useReducer } from 'react';
+import { createContext, FC, useEffect, useReducer, useState } from 'react';
 import _ from 'lodash-es';
 import HttpResponse from './components/http/Response';
 import en from './locales/en.json';
@@ -57,92 +57,64 @@ const defaultState = {
       stack: '',
     },
   },
-  testResult: {
-
-  },
+  testResult: {},
   locale: en,
 };
-// settestResult.age
-// function reducer(state = defaultState, action) {
-//
-//   // TODO 优化一下
-//   // p({
-//   // payload:'zhi'
-//   //  path:'testResult.age'
-//   // })
-//   function underline(str) {
-//     return str.replace(/\B([A-Z])/g, '_$1').toLowerCase();
-//   }
-//   const clonestate = JSON.parse(JSON.stringify(state));
-//
-//   const arr = underline(action.type).split('_');
-//
-//   _.set(clonestate, arr.slice(1, arr.length).join('.'), action.payload);
-//   return clonestate;
-// }
 
 function reducer(state = defaultState, action) {
-
-  // TODO 优化一下
-  // p({
-  // payload:'zhi'
-  //  path:'testResult.age'
-  // })
-
   const clonestate = JSON.parse(JSON.stringify(state));
-
-
   _.set(clonestate, action.type, action.payload);
-  // console.log({clonestate},action)
   return clonestate;
 }
 
-interface EvaRequestComponentProps {
-  locale: any;
-  updateRequest:any
-  createRequest:any
+interface ArexRequestComponentProps {
+  collectionTreeData: any[];
+  currentRequestId: string;
+  envData: [];
+  currentEnvId: string;
+  locale: string;
+  onEdit: ({ type, payload }: any) => any;
 }
 
-const EvaRequestComponent: FC<EvaRequestComponentProps> = ({ locale,updateRequest }, context) => {
-  // console.log(props,'props',context,'context')
+const ArexRequestComponent: FC<ArexRequestComponentProps> = ({
+  // locale,
+  // updateRequest,
+  // createRequest,
+  // findRequest,
+  // id
+  collectionTreeData,
 
+  currentRequestId,
+  envData,
+  currentEnvId,
+  locale,
+  onEdit,
+}) => {
   const [store, dispatch] = useReducer(reducer, defaultState); //创建reducer
-
-  const data = {
-    _id: '633ac99c3dfa7510a140c53c',
-    endpoint: 'http://qingkong.rico.org.cn/api/cov/calendar',
-    testScript: `
-
-// Check status code is 200
-pw.test("Status code is 200", ()=> {
-    pw.expect(pw.response.body[0].id).toBe(1);
-});`,
-    method: 'GET',
-    params: [
-      { key: 'name', value: 'zt', active: true },
-      { key: 'age', value: '18', active: true },
-    ],
-    headers: [],
-    body: {
-      body: '{\n  "username": "zt",\n  "password":"zt"\n}',
-      contentType: '',
-      _id: '633ac99c3dfa7510a140c53d',
-    },
-    createdAt: '2022-10-03T11:38:04.592Z',
-    __v: 0,
-  };
-
+  const [data, setData] = useState({});
   useEffect(() => {
     dispatch({
       type: 'locale',
       payload: localeObj[locale],
     });
-
-    dispatch({
-      type: 'request',
-      payload: data,
+    onEdit({
+      type: 'retrieve',
+      payload: {
+        requestId: currentRequestId,
+      },
+    }).then((res) => {
+      console.log(res, 'res');
+      dispatch({
+        type: 'request',
+        payload: res,
+      });
     });
   }, [locale]);
+
+  // retrieveRequest={findRequestById}
+  // updateRequest={updateRequestById}
+  // createRequest={createRequestService}
+  // deleteRequest={findRequestById}
 
   return (
     <HttpContext.Provider value={{ store, dispatch }}>
@@ -153,9 +125,15 @@ pw.test("Status code is 200", ()=> {
         vertical={true}
       >
         <Allotment.Pane preferredSize={400}>
-          <div css={css`height: 100%;display: flex;flex-direction: column`}>
+          <div
+            css={css`
+              height: 100%;
+              display: flex;
+              flex-direction: column;
+            `}
+          >
             {/*{JSON.stringify(store.request)}*/}
-            <HttpRequest updateRequest={updateRequest}></HttpRequest>
+            <HttpRequest collectionTreeData={collectionTreeData} currentRequestId={currentRequestId} onEdit={onEdit}></HttpRequest>
             <HttpRequestOptions data={data}></HttpRequestOptions>
           </div>
         </Allotment.Pane>
@@ -167,4 +145,4 @@ pw.test("Status code is 200", ()=> {
   );
 };
 
-export default EvaRequestComponent;
+export default ArexRequestComponent;

@@ -64,8 +64,8 @@ const HttpResponseMeta: FC<{ response: HoppRESTResponse }> = ({ response }) => {
                 <span>
                   {t('response.status')}:
                   <span css={tabCss}>
-                    {`${response.statuscode}\xA0 • \xA0`}
-                    {getStatusCodeReasonPhrase(response.statuscode)}
+                    {`${response.statusCode}\xA0 • \xA0`}
+                    {getStatusCodeReasonPhrase(response.statusCode)}
                   </span>
                 </span>
                 <span>

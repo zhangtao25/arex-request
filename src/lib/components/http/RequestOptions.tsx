@@ -12,17 +12,19 @@ import { css } from '@emotion/react';
 import { useCodeMirror } from '../../helpers/editor/codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { json } from '@codemirror/lang-json';
+import {githubLight} from "@uiw/codemirror-theme-github";
 const { TabPane } = Tabs;
 const HttpRequestOptions = ({ data }) => {
   const { store } = useContext(HttpContext);
   const t = (key) => getValueByPath(store.locale, key);
-  const [activeKey, setActiveKey] = useState('-1');
+  const [activeKey, setActiveKey] = useState('0');
   const testRef = useRef(null);
   useCodeMirror({
     container: testRef.current,
     height: '100%',
     value: JSON.stringify(store.request, null, 2),
     extensions: [json()],
+    theme: githubLight
   });
 
   // useCodeMirror({
@@ -33,6 +35,12 @@ const HttpRequestOptions = ({ data }) => {
   // });
 
   const items = [
+    { label: t('request.parameters'), key: '0', children: <HttpParameters /> }, // 务必填写 key
+    // { label: 'form-data', key: '1', children: '内容 2' },
+    // { label: 'x-www-form-urlencoded', key: '2', children: '内容 2' },
+    { label: 'Headers', key: '1', children: <HttpHeaders data={data} /> },
+    { label: 'Body', key: '3', children: <HttpBody data={data} /> },
+    { label: 'Tests', key: '4', children: <HttpTests data={data} /> },
     {
       label: 'look',
       key: '-1',
@@ -45,13 +53,6 @@ const HttpRequestOptions = ({ data }) => {
         ></div>
       ),
     }, // 务必填写 key
-    { label: t('request.parameters'), key: '0', children: <HttpParameters /> }, // 务必填写 key
-    // { label: 'form-data', key: '1', children: '内容 2' },
-    // { label: 'x-www-form-urlencoded', key: '2', children: '内容 2' },
-    { label: 'Headers', key: '1', children: <HttpHeaders data={data} /> },
-    { label: 'Body', key: '3', children: <HttpBody data={data} /> },
-    { label: 'Tests', key: '4', children: <HttpTests data={data} /> },
-
     // { label: 'binary', key: '4', children: '内容 2' },
   ];
   return (
