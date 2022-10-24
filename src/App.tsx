@@ -1,9 +1,9 @@
 import { DownOutlined } from '@ant-design/icons';
 import { css } from '@emotion/react';
 import { Allotment } from 'allotment';
-import { Button, ConfigProvider, Tabs, Tree } from 'antd';
+import {Button, Checkbox, ConfigProvider, Form, Input, Tabs, Tree} from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
-import { useState } from 'react';
+import {useRef, useState} from 'react';
 
 import ArexRequestComponent from './lib';
 import { useMount } from 'ahooks';
@@ -18,6 +18,10 @@ const mockReqData = {
     body: '',
     contentType: '',
   },
+  mock: {
+    username:'zt',
+    password:'pw'
+  }
 };
 
 export function treeFindPath(tree: any, func: any, path: any = []): any {
@@ -99,13 +103,66 @@ function arrToTree(arr: any, pid = '') {
   return newArr;
 }
 
+
+
 function App() {
+  const arexRequestComponentRef = useRef(null)
   const [treeData, setTreeData] = useState([]);
   const [locale, setLocale] = useState('en');
   const [pages, setPages] = useState<{ label: string; key: string }[]>([{
     key:'633ac99c3dfa7510a140c53f',
     label:'账号密码登陆'
   }]);
+  const MockReq: React.FC = () => {
+    const onFinish = (values: any) => {
+      // console.log('Success:', values,arexRequestComponentRef.current.func());
+
+      arexRequestComponentRef.current.setValue(values)
+
+    };
+
+    const onFinishFailed = (errorInfo: any) => {
+      console.log('Failed:', errorInfo);
+    };
+
+    return (
+      <Form
+        name="basic"
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+      >
+        <Form.Item
+          label="Username"
+          name="username"
+          rules={[{ required: true, message: 'Please input your username!' }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Password"
+          name="password"
+          rules={[{ required: true, message: 'Please input your password!' }]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
+
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    );
+  };
   const onSelect: any['onSelect'] = (selectedKeys, info) => {
     console.log('selected', selectedKeys, info);
     setPages([
@@ -132,6 +189,8 @@ function App() {
       }, 300);
     });
   }
+
+
 
   return (
     <div>
@@ -187,6 +246,16 @@ function App() {
                         return updateRequestById(e.payload);
                       }
                     }}
+                    cRef={arexRequestComponentRef}
+                    requestExtraTabItems={[{
+                      key:'7',
+                      label:'mock',
+                      children: (<MockReq></MockReq>),
+                      field:'mock',
+                      data:{
+                        mock:'mock'
+                      }
+                    }]}
                   />
                 ),
               }))}

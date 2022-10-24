@@ -14,7 +14,7 @@ import { javascript } from '@codemirror/lang-javascript';
 import { json } from '@codemirror/lang-json';
 import {githubLight} from "@uiw/codemirror-theme-github";
 const { TabPane } = Tabs;
-const HttpRequestOptions = ({ data }) => {
+const HttpRequestOptions = ({ data,requestExtraTabItems }) => {
   const { store } = useContext(HttpContext);
   const t = (key) => getValueByPath(store.locale, key);
   const [activeKey, setActiveKey] = useState('0');
@@ -54,6 +54,7 @@ const HttpRequestOptions = ({ data }) => {
       ),
     }, // 务必填写 key
     // { label: 'binary', key: '4', children: '内容 2' },
+    ...requestExtraTabItems
   ];
   return (
     <div

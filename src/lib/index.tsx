@@ -4,7 +4,7 @@ import HttpRequest from './components/http/Request';
 import 'allotment/dist/style.css';
 import 'antd/dist/antd.css';
 import HttpRequestOptions from './components/http/RequestOptions';
-import { createContext, FC, useEffect, useReducer, useState } from 'react';
+import {createContext, FC, useEffect, useImperativeHandle, useReducer, useState} from 'react';
 import _ from 'lodash-es';
 import HttpResponse from './components/http/Response';
 import en from './locales/en.json';
@@ -74,6 +74,9 @@ interface ArexRequestComponentProps {
   currentEnvId: string;
   locale: string;
   onEdit: ({ type, payload }: any) => any;
+  requestExtraTabItems:any
+  requestExtraData:any
+  cRef:any
 }
 
 const ArexRequestComponent: FC<ArexRequestComponentProps> = ({
@@ -89,8 +92,17 @@ const ArexRequestComponent: FC<ArexRequestComponentProps> = ({
   currentEnvId,
   locale,
   onEdit,
+                                                               requestExtraTabItems,
+                                                               cRef,
+  requestExtraData
 }) => {
-  const [store, dispatch] = useReducer(reducer, defaultState); //创建reducer
+  const [store, dispatch] = useReducer(reducer, {
+    ...defaultState,
+    request:{
+      ...defaultState.request,
+      ...requestExtraTabItems[0].data
+    }
+  }); //创建reducer
   const [data, setData] = useState({});
   useEffect(() => {
     dispatch({
@@ -116,6 +128,26 @@ const ArexRequestComponent: FC<ArexRequestComponentProps> = ({
   // createRequest={createRequestService}
   // deleteRequest={findRequestById}
 
+  //用useImperativeHandle暴露一些外部ref能访问的属性
+  useImperativeHandle(cRef, () => {
+    // 需要将暴露的接口返回出去
+    return {
+      func: func,
+      setValue(value){
+
+        dispatch({
+          type: 'request.mock',
+          payload: value,
+        })
+
+      }
+    };
+  });
+
+  function func() {
+    return store.request
+  }
+
   return (
     <HttpContext.Provider value={{ store, dispatch }}>
       <Allotment
@@ -134,7 +166,7 @@ const ArexRequestComponent: FC<ArexRequestComponentProps> = ({
           >
             {/*{JSON.stringify(store.request)}*/}
             <HttpRequest collectionTreeData={collectionTreeData} currentRequestId={currentRequestId} onEdit={onEdit}></HttpRequest>
-            <HttpRequestOptions data={data}></HttpRequestOptions>
+            <HttpRequestOptions requestExtraTabItems={requestExtraTabItems} data={data}></HttpRequestOptions>
           </div>
         </Allotment.Pane>
         <Allotment.Pane>
