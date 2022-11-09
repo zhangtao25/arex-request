@@ -1,3 +1,4 @@
+// @ts-nocheck
 import styled from '@emotion/styled';
 import { useMount } from 'ahooks';
 import { useContext, useEffect, useMemo, useState } from 'react';

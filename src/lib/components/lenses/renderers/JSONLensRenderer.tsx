@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { CopyOutlined } from '@ant-design/icons';
 import { json } from '@codemirror/lang-json';
 import { css } from '@emotion/react';

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { javascript } from '@codemirror/lang-javascript';
 import { css } from '@emotion/react';

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import { Button, Tooltip } from 'antd';

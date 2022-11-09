@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Input, RadioChangeEvent, Select } from 'antd';
 import { useContext } from 'react';
 

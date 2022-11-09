@@ -1,3 +1,4 @@
+// @ts-nocheck
 export function getValueByPath(obj, path) {
   // console.log(obj,path,'o')
   try {

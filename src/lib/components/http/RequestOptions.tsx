@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { css } from '@emotion/react';
 import { Badge, Tabs, Tag } from 'antd';
 import { useContext, useState } from 'react';

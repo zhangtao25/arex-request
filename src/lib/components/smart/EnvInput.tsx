@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { hoverTooltip } from '@codemirror/view';
 import { css } from '@emotion/react';
 import { FC, useContext, useRef } from 'react';

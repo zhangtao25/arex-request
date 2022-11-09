@@ -1,3 +1,4 @@
+// @ts-nocheck
 import 'allotment/dist/style.css';
 import 'antd/dist/antd.css';
 

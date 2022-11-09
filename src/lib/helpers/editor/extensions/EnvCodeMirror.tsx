@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { EditorState, StateEffect, StateEffectType, StateField } from '@codemirror/state';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { Decoration, DecorationSet, EditorView, ViewUpdate } from '@codemirror/view';

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Environment } from '@hoppscotch/data';
 
 export type HoppTestExpectResult = {

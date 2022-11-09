@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { DeleteOutlined, PicRightOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { javascript } from '@codemirror/lang-javascript';
 import { json } from '@codemirror/lang-json';

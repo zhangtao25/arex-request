@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { css } from '@emotion/react';
 import { Empty, Spin, Typography } from 'antd';
 import { FC, useContext, useMemo } from 'react';

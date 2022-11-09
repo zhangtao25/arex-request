@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { css } from '@emotion/react';
 import { Radio, RadioChangeEvent } from 'antd';
 import { useContext, useRef, useState } from 'react';

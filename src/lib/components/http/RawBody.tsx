@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { json } from '@codemirror/lang-json';
 import { css } from '@emotion/react';
 import { Button, message } from 'antd';

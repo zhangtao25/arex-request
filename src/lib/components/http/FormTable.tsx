@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { CheckCircleOutlined, DeleteOutlined, StopOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import { Button, Input, Space, Table, TableProps, Tooltip } from 'antd';

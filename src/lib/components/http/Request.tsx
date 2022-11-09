@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { DownOutlined } from '@ant-design/icons';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';

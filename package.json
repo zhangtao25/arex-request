@@ -2,10 +2,10 @@
   "name": "arex-request",
   "version": "0.0.2",
   "type": "module",
-  "main": "./src/lib/index.tsx",
+  "main": "./dist/index.js",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "lint": "prettier --write \"src/**/*.{ts,tsx}\" && eslint \"src/**/*.{ts,tsx}\" --fix"
   },

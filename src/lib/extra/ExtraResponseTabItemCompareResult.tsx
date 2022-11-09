@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { css } from '@emotion/react';
 import { Radio, Table, Tabs } from 'antd';
 import JSONEditor from 'jsoneditor';

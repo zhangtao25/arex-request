@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { json } from '@codemirror/lang-json';
 import { EditorView } from '@codemirror/view';
 import { FC, useContext, useRef } from 'react';

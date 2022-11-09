@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { EditorSelection, SelectionRange, Line } from '@codemirror/state';
 import { ViewUpdate } from '@codemirror/view';
 

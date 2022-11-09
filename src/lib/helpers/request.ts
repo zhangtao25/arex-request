@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { runTestScript } from './sandbox';
 
 function AgentAxios<T>(params: any) {
