@@ -53,14 +53,16 @@ export const AgentAxiosAndTest = ({ request }: any) =>
           };
         }, {}),
   }).then((res: any) => {
-    return runTestScript(request.testScript, { body: res.data, headers: [], status: 200 }).then(
-      (testDescriptor) => {
-        return {
-          response: res,
-          testResult: testDescriptor,
-        };
-      },
-    );
+    return runTestScript(request.testScript, {
+      body: res.data,
+      headers: res.headers,
+      status: res.status,
+    }).then((testDescriptor) => {
+      return {
+        response: res,
+        testResult: testDescriptor,
+      };
+    });
   });
 
 export const AgentAxiosCompare = ({ request }: any) => {

@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { CopyOutlined } from '@ant-design/icons';
 import { json } from '@codemirror/lang-json';
+import { EditorView } from '@codemirror/view';
 import { css } from '@emotion/react';
 import { Button, message, Space, Tooltip } from 'antd';
 // import copy from 'copy-to-clipboard';
@@ -22,7 +23,7 @@ const JSONLensRenderer: FC<{ response: HoppRESTResponse }> = ({ response }) => {
     container: jsonResponse.current,
     value: JSON.stringify(jsonObj, null, 2),
     height: '100%',
-    extensions: [json()],
+    extensions: [json(), EditorView.lineWrapping],
     theme: globalStore.theme.type,
   });
   return (
