@@ -1,16 +1,15 @@
 import { DeleteOutlined, PicRightOutlined, QuestionCircleOutlined } from '@ant-design/icons';
-
+import { javascript } from '@codemirror/lang-javascript';
+import { json } from '@codemirror/lang-json';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-
+import { githubDark, githubLight } from '@uiw/codemirror-theme-github';
 import { Button, Tooltip } from 'antd';
 import { useContext, useEffect, useRef, useState } from 'react';
 
-import { HttpContext } from '../../index';
-import { getValueByPath } from '../../helpers/utils/locale';
 import { useCodeMirror } from '../../helpers/editor/codemirror';
-import { json } from '@codemirror/lang-json';
-import {javascript} from "@codemirror/lang-javascript";
-import { githubLight, githubDark } from '@uiw/codemirror-theme-github';
+import { getValueByPath } from '../../helpers/utils/locale';
+import { GlobalContext, HttpContext } from '../../index';
 
 export const ResponseTestHeader = styled.div`
   display: flex;
@@ -24,8 +23,10 @@ export const ResponseTestHeader = styled.div`
 `;
 
 export const ResponseTestWrapper = styled.div`
+  overflow-y: auto;
   display: flex;
   justify-content: space-between;
+  flex: 1;
   & > div:last-of-type {
     width: 35%;
     text-align: left;
@@ -59,8 +60,9 @@ export type ResponseTestProps = {
 };
 
 const HttpTests = ({ getTestVal, OldTestVal }: ResponseTestProps) => {
-  const { store,dispatch } = useContext(HttpContext);
-  const t = (key) => getValueByPath(store.locale, key);
+  const { store, dispatch } = useContext(HttpContext);
+  const { store: globalStore } = useContext(GlobalContext);
+  const t = (key) => getValueByPath(globalStore.locale.locale, key);
 
   const [TestVal, setTestVal] = useState<string>('');
   const [isLineWrapping, setIsLineWrapping] = useState<boolean>(true);
@@ -83,42 +85,46 @@ arex.test("Status code is 200", ()=> {
     value: store.request.testScript,
     height: '100%',
     extensions: [javascript()],
-    theme:githubLight,
+    theme: globalStore.theme.type,
     onChange: (val) => {
-      console.log(val,'va')
       dispatch({
-        type:'request.testScript',
-        payload: val
-      })
+        type: 'request.testScript',
+        payload: val,
+      });
     },
   });
 
   const addTest = (text: string) => {
     // console.log(store.request.testScript + text,'store.request.testScript + text')
     dispatch({
-      type:'request.testScript',
-      payload: store.request.testScript + text
-    })
-
+      type: 'request.testScript',
+      payload: store.request.testScript + text,
+    });
   };
   const feedLine = () => {
     setIsLineWrapping(!isLineWrapping);
   };
 
   return (
-    <>
+    <div
+      css={css`
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      `}
+    >
       <ResponseTestHeader>
         <span>{t('preRequest.javascript_code')}</span>
         <div>
-          <Tooltip title={t('help')}>
-            <Button disabled type='text' icon={<QuestionCircleOutlined />} />
-          </Tooltip>
-          <Tooltip title={t('lineFeed')}>
-            <Button type='text' icon={<PicRightOutlined />} onClick={feedLine} />
-          </Tooltip>
-          <Tooltip title={t('clearAll')}>
-            <Button type='text' icon={<DeleteOutlined />} onClick={() => setTestVal('')} />
-          </Tooltip>
+          {/*<Tooltip title={t('help')}>*/}
+          {/*  <Button disabled type='text' icon={<QuestionCircleOutlined />} />*/}
+          {/*</Tooltip>*/}
+          {/*<Tooltip title={t('lineFeed')}>*/}
+          {/*  <Button type='text' icon={<PicRightOutlined />} onClick={feedLine} />*/}
+          {/*</Tooltip>*/}
+          {/*<Tooltip title={t('clearAll')}>*/}
+          {/*  <Button type='text' icon={<DeleteOutlined />} onClick={() => setTestVal('')} />*/}
+          {/*</Tooltip>*/}
         </div>
       </ResponseTestHeader>
       <ResponseTestWrapper>
@@ -151,7 +157,7 @@ arex.test("Status code is 200", ()=> {
           ))}
         </div>
       </ResponseTestWrapper>
-    </>
+    </div>
   );
 };
 

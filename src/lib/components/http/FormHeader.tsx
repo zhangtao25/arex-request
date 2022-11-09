@@ -1,17 +1,14 @@
-import {
-  DeleteOutlined,
-  EditOutlined,
-  PlusOutlined,
-  QuestionCircleOutlined,
-} from '@ant-design/icons';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import { Button, Tooltip } from 'antd';
 import { FC, useContext } from 'react';
 import { Updater } from 'use-immer';
-import { HttpContext } from '../../index';
+
 import { getValueByPath } from '../../helpers/utils/locale';
+import { GlobalContext, HttpContext } from '../../index';
 
 export type KeyValueType = {
+  id: string;
   key: string;
   value: string;
   active: boolean;
@@ -32,15 +29,17 @@ export const FormHeaderWrapper = styled.div`
   }
 `;
 
-const FormHeader: FC<{ update: Updater<KeyValueType[]> }> = (props) => {
+const FormHeader: FC<{ update: Updater<KeyValueType[]>; title: string }> = (props) => {
   const { store } = useContext(HttpContext);
-  const t = (key) => getValueByPath(store.locale, key);
+  const { store: globalStore } = useContext(GlobalContext);
+  const t = (key) => getValueByPath(globalStore.locale.locale, key);
 
   const handleAddParam = () => {
     const newValue: KeyValueType = {
       key: '',
       value: '',
       active: true,
+      id: String(Math.random()),
     };
     props.update((state) => {
       state.push(newValue);
@@ -51,18 +50,12 @@ const FormHeader: FC<{ update: Updater<KeyValueType[]> }> = (props) => {
 
   return (
     <FormHeaderWrapper>
-      <span>{t('request.parameter_list')}</span>
+      <span>{props.title}</span>
       <div>
-        <Tooltip title={t('help')}>
-          <Button type='text' icon={<QuestionCircleOutlined />} />
-        </Tooltip>
-        <Tooltip title={t('clearAll')}>
+        <Tooltip title={t('action.clear_all')}>
           <Button type='text' icon={<DeleteOutlined />} onClick={handleClearAllParams} />
         </Tooltip>
-        <Tooltip title={t('batchEdit')}>
-          <Button type='text' icon={<EditOutlined />} />
-        </Tooltip>
-        <Tooltip title={t('add')}>
+        <Tooltip title={t('add.new')}>
           <Button type='text' icon={<PlusOutlined />} onClick={handleAddParam} />
         </Tooltip>
       </div>

@@ -7,10 +7,11 @@ export function getValueByPath(obj, path) {
     while ((prop = paths.shift())) {
       res = res[prop];
     }
-    if (typeof res === "string"){
-      return res
+    console.log(res, 'res', typeof res);
+    if (typeof res === 'string') {
+      return res;
     } else {
-      return '不是string'
+      return '不是string';
     }
     // return res;
   } catch (e) {

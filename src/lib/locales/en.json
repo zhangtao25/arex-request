@@ -144,7 +144,8 @@
     "message": "Message {count}",
     "parameter": "Parameter {count}",
     "protocol": "Protocol {count}",
-    "value": "Value {count}",
+    "value": "Value",
+    "key": "Key",
     "variable": "Variable {count}"
   },
   "documentation": {
@@ -497,13 +498,13 @@
       "title": "Theme"
     }
   },
-  "shortcodes":{
-    "actions":"Actions",
+  "shortcodes": {
+    "actions": "Actions",
     "created_on": "Created on",
-    "deleted" : "Shortcode deleted",
+    "deleted": "Shortcode deleted",
     "method": "Method",
-    "not_found":"Shortcode not found",
-    "short_code":"Short code",
+    "not_found": "Shortcode not found",
+    "short_code": "Short code",
     "url": "URL"
   },
   "show": {

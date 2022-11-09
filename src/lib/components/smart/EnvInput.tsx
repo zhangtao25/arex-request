@@ -1,19 +1,13 @@
 import { hoverTooltip } from '@codemirror/view';
-import styled from '@emotion/styled';
-import {FC, useContext, useRef} from 'react';
+import { css } from '@emotion/react';
+import { FC, useContext, useRef } from 'react';
 
 import { useEnvCodeMirror } from '../../helpers/editor/extensions/EnvCodeMirror';
 import {
   getMarkFromToArr,
   HOPP_ENVIRONMENT_REGEX,
 } from '../../helpers/editor/extensions/HoppEnvironment';
-import {HttpContext} from "../../index";
-// import { useStore } from '../../store';
-
-const SmartEnvInputWrapper = styled.div`
-  flex: 1;
-  overflow: hidden;
-`;
+import { GlobalContext, HttpContext } from '../../index';
 
 interface SmartEnvInputProps {
   value: string;
@@ -21,9 +15,8 @@ interface SmartEnvInputProps {
 }
 const SmartEnvInput: FC<SmartEnvInputProps> = ({ value, onChange }) => {
   const smartEnvInputRef = useRef(null);
-  const {dispatch} = useContext(HttpContext)
-  // const { currentEnvironment, themeClassify } = useStore();
-  // console.log(themeClassify,'themeClassify')
+  const { dispatch, store } = useContext(HttpContext);
+  const { dispatch: globalDispatch, store: globalStore } = useContext(GlobalContext);
   useEnvCodeMirror({
     container: smartEnvInputRef.current,
     value: value,
@@ -32,7 +25,7 @@ const SmartEnvInput: FC<SmartEnvInputProps> = ({ value, onChange }) => {
       [
         hoverTooltip((view, pos, side) => {
           const { text } = view.state.doc.lineAt(pos);
-          const markArrs = getMarkFromToArr(text, HOPP_ENVIRONMENT_REGEX, 'currentEnvironment');
+          const markArrs = getMarkFromToArr(text, HOPP_ENVIRONMENT_REGEX, globalStore.environment);
           const index = markArrs.map((i) => pos < i.to && pos > i.from).findIndex((i) => i);
           if (index === -1) {
             return null;
@@ -56,19 +49,26 @@ const SmartEnvInput: FC<SmartEnvInputProps> = ({ value, onChange }) => {
       ],
     ],
     onChange: (val) => {
+      console.log({ val });
       dispatch({
         type: 'request.endpoint',
         payload: val,
       });
     },
-    currentEnv: 'currentEnvironment',
-    theme: 'light',
+    currentEnv: globalStore.environment,
+    theme: globalStore.theme.type,
   });
 
   return (
-    <SmartEnvInputWrapper className={'smart-env'}>
+    <div
+      css={css`
+        border: 1px solid ${globalStore.theme.theme.colors.primaryBorder};
+        flex: 1;
+        overflow: hidden;
+      `}
+    >
       <div ref={smartEnvInputRef} />
-    </SmartEnvInputWrapper>
+    </div>
   );
 };
 

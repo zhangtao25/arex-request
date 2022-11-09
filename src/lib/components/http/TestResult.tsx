@@ -1,12 +1,13 @@
-import { useContext, useRef, useState } from 'react';
-import { HttpContext } from '../../index';
-import { useCodeMirror } from '../../helpers/editor/codemirror';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { javascript } from '@codemirror/lang-javascript';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { List, Progress } from 'antd';
-import { css } from '@emotion/react';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { useContext, useRef, useState } from 'react';
+
+import { useCodeMirror } from '../../helpers/editor/codemirror';
 import { getValueByPath } from '../../helpers/utils/locale';
+import { GlobalContext, HttpContext } from '../../index';
 const TestError = styled.div`
   text-align: center;
   & > div:first-of-type {
@@ -15,18 +16,13 @@ const TestError = styled.div`
     margin-top: 10px;
   }
 `;
-const TestResult = () => {
-  const { store, dispatch } = useContext(HttpContext);
-  const t = (key) => getValueByPath(store.locale, key);
-  // const {store,dispatch} = useContext(HttpContext)
-  const [testPass, setTestPass] = useState<number[]>([]);
-  const testResultEditor = useRef(null);
+const TestResult = ({ testResult }) => {
+  const { store } = useContext(GlobalContext);
+  console.log(store, 'store');
   return (
     <div>
-      {JSON.stringify(store.testResult)}
-
       {true ? (
-        store.testResult.children?.map((e: any, i) => (
+        testResult.children?.map((e: any, i) => (
           <List
             key={i}
             size='large'
@@ -54,7 +50,11 @@ const TestResult = () => {
                     strokeWidth={20}
                     percent={100}
                     success={{
-                      percent: Math.round((testPass[i] / e.expectResults.length) * 100),
+                      percent: Math.round(
+                        (e.expectResults.filter((i) => i.status === 'pass').length /
+                          e.expectResults.length) *
+                          100,
+                      ),
                       strokeColor: '#10B981',
                     }}
                     type='circle'
@@ -65,24 +65,27 @@ const TestResult = () => {
                       margin-left: 10px;
                     `}
                   >
-                    {e.expectResults.length - testPass[i] ? (
+                    {e.expectResults.length -
+                    e.expectResults.filter((i) => i.status === 'pass').length ? (
                       <span
                         css={css`
                           color: #ef4444;
                         `}
                       >
-                        {e.expectResults.length - testPass[i]} failing,{' '}
+                        {e.expectResults.length -
+                          e.expectResults.filter((i) => i.status === 'pass').length}{' '}
+                        failing,{' '}
                       </span>
                     ) : (
                       <></>
                     )}
-                    {testPass[i] ? (
+                    {e.expectResults.filter((i) => i.status === 'pass').length ? (
                       <span
                         css={css`
                           color: #10b981;
                         `}
                       >
-                        {testPass[i]} successful,{' '}
+                        {e.expectResults.filter((i) => i.status === 'pass').length} successful,{' '}
                       </span>
                     ) : (
                       <></>
@@ -112,7 +115,7 @@ const TestResult = () => {
                   />
                 )}
                 {item.message}——
-                {item.status == 'pass' ? t('http.testPassed') : t('http.testFailed')}
+                {item.status == 'pass' ? 'testPassed' : 'testFailed'}
               </List.Item>
             )}
           />

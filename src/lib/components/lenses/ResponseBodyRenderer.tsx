@@ -1,22 +1,17 @@
-import { json } from '@codemirror/lang-json';
+import { css } from '@emotion/react';
 import { Tabs } from 'antd';
-import { FC, useRef } from 'react';
+import { FC } from 'react';
+
 import { HoppRESTResponse } from '../../helpers/types/HoppRESTResponse';
+import TestResult from '../http/TestResult';
 import LensesHeadersRenderer from './HeadersRenderer';
 import JSONLensRenderer from './renderers/JSONLensRenderer';
 import RawLensRenderer from './renderers/RawLensRenderer';
-import {css} from "@emotion/react";
-import TestResult from "../http/TestResult";
 
-const LensesResponseBodyRenderer: FC<{ response: HoppRESTResponse }> = ({ response }) => {
-  // const jsonResponse = useRef(null);
-
-  // useCodeMirror({
-  //   container: jsonResponse.current,
-  //   value: response.body,
-  //   height: '300px',
-  //   extensions: [json()],
-  // });
+const LensesResponseBodyRenderer: FC<{ response: HoppRESTResponse; testResult: any }> = ({
+  response,
+  testResult,
+}) => {
   const items = [
     {
       label: 'JSON',
@@ -36,13 +31,20 @@ const LensesResponseBodyRenderer: FC<{ response: HoppRESTResponse }> = ({ respon
     {
       label: 'Result',
       key: '3',
-      children: <TestResult />,
+      children: <TestResult testResult={testResult} />,
     },
   ];
+  console.log(response, 'response');
   return (
-    <div css={css`padding: 16px`}>
-      <Tabs items={items} />
-      {/*<div ref={jsonResponse}></div>*/}
+    <div
+      css={css`
+        flex: 1;
+        .ant-tabs-content-holder {
+          height: 100px;
+        }
+      `}
+    >
+      <Tabs style={{ height: '100%' }} items={items} />
     </div>
   );
 };

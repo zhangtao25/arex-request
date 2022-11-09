@@ -1,3 +1,5 @@
+import { runTestScript } from './sandbox';
+
 function AgentAxios<T>(params: any) {
   return new Promise<T>((resolve, reject) => {
     const tid = String(Math.random());
@@ -29,3 +31,87 @@ function AgentAxios<T>(params: any) {
 }
 
 export default AgentAxios;
+
+export const AgentAxiosAndTest = ({ request }: any) =>
+  AgentAxios({
+    method: request.method,
+    url: request.endpoint,
+    headers: request.headers.reduce((p, c) => {
+      return {
+        ...p,
+        [c.key]: c.value,
+      };
+    }, {}),
+    data: ['GET'].includes(request.method) ? undefined : JSON.parse(request.body.body || '{}'),
+    params: ['POST'].includes(request.method)
+      ? undefined
+      : request.params.reduce((p, c) => {
+          return {
+            ...p,
+            [c.key]: c.value,
+          };
+        }, {}),
+  }).then((res: any) => {
+    return runTestScript(request.testScript, { body: res.data, headers: [], status: 200 }).then(
+      (testDescriptor) => {
+        return {
+          response: res,
+          testResult: testDescriptor,
+        };
+      },
+    );
+  });
+
+export const AgentAxiosCompare = ({ request }: any) => {
+  return Promise.all([
+    AgentAxios({
+      method: request.method,
+      url: request.endpoint,
+      headers: request.headers.reduce((p, c) => {
+        return {
+          ...p,
+          [c.key]: c.value,
+        };
+      }, {}),
+      data: ['GET'].includes(request.method) ? undefined : JSON.parse(request.body.body || '{}'),
+      params: ['POST'].includes(request.method)
+        ? undefined
+        : request.params.reduce((p, c) => {
+            return {
+              ...p,
+              [c.key]: c.value,
+            };
+          }, {}),
+    }),
+    AgentAxios({
+      method: request.compareMethod,
+      url: request.compareEndpoint,
+      headers: request.headers.reduce((p, c) => {
+        return {
+          ...p,
+          [c.key]: c.value,
+        };
+      }, {}),
+      data: ['GET'].includes(request.method) ? undefined : JSON.parse(request.body.body || '{}'),
+      params: ['POST'].includes(request.method)
+        ? undefined
+        : request.params.reduce((p, c) => {
+            return {
+              ...p,
+              [c.key]: c.value,
+            };
+          }, {}),
+    }),
+  ]).then((res) =>
+    res.reduce((previousValue, currentValue, currentIndex) => {
+      if (currentIndex === 0) {
+        previousValue.response = currentValue;
+      }
+      if (currentIndex === 1) {
+        previousValue.compareResponse = currentValue;
+      }
+
+      return previousValue;
+    }, {}),
+  );
+};

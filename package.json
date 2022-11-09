@@ -1,6 +1,6 @@
 {
   "name": "arex-request",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "main": "./src/lib/index.tsx",
   "scripts": {
@@ -24,9 +24,11 @@
     "@uiw/codemirror-theme-github": "^4.12.4",
     "ahooks": "^3.7.1",
     "allotment": "^1.17.0",
-    "antd": "^4.23.5",
+    "antd": "^4.24.1",
     "codemirror": "^6.0.1",
+    "copy-to-clipboard": "^3.3.2",
     "immer": "^9.0.15",
+    "jsoneditor": "^9.9.2",
     "lodash-es": "^4.17.21",
     "purple-js-sandbox": "^1.0.14",
     "react": "^18.2.0",

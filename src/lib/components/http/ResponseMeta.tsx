@@ -1,16 +1,17 @@
 import { css } from '@emotion/react';
-import { Spin } from 'antd';
+import { Empty, Spin, Typography } from 'antd';
 import { FC, useContext, useMemo } from 'react';
 
 import { HoppRESTResponse } from '../../helpers/types/HoppRESTResponse';
 import { getStatusCodeReasonPhrase } from '../../helpers/utils/statusCodes';
 import { getValueByPath } from '../../helpers/utils/locale';
-import { HttpContext } from '../../index';
+import { GlobalContext, HttpContext } from '../../index';
 
 const HttpResponseMeta: FC<{ response: HoppRESTResponse }> = ({ response }) => {
   const { store } = useContext(HttpContext);
+  const { store: globalStore } = useContext(GlobalContext);
 
-  const t = (key) => getValueByPath(store.locale, key);
+  const t = (key) => getValueByPath(globalStore.locale.locale, key);
   const tabCss = css`
     color: #10b981;
     font-weight: bolder;
@@ -19,15 +20,7 @@ const HttpResponseMeta: FC<{ response: HoppRESTResponse }> = ({ response }) => {
   `;
 
   const readableResponseSize = useMemo(() => {
-    // if (
-    //   response.type === "loading" ||
-    //   response.type === "network_fail" ||
-    //   response.type === "script_fail" ||
-    //   response.type === "fail"
-    // )
-    //   return undefined
     const size = response.meta.responseSize;
-
     if (size >= 100000) return (size / 1000000).toFixed(2) + ' MB';
     if (size >= 1000) return (size / 1000).toFixed(2) + ' KB';
 
@@ -35,9 +28,21 @@ const HttpResponseMeta: FC<{ response: HoppRESTResponse }> = ({ response }) => {
   }, [response]);
 
   return (
-    <div css={css`padding: 16px`}>
-      {response === null ? (
-        <div></div>
+    <div
+      css={css`
+        padding: 16px 0 16px 0;
+      `}
+    >
+      {response.type === 'null' ? (
+        <div>
+          <Empty
+            description={
+              <Typography.Text type='secondary'>
+                Enter the URL and click Send to get a response
+              </Typography.Text>
+            }
+          />
+        </div>
       ) : (
         <>
           <div>
@@ -48,7 +53,6 @@ const HttpResponseMeta: FC<{ response: HoppRESTResponse }> = ({ response }) => {
                   margin-bottom: 20px;
                   padding: 30px 50px;
                   text-align: center;
-                  //background: rgba(0, 0, 0, 0.05);
                   border-radius: 4px;
                   height: 100%;
                 `}
