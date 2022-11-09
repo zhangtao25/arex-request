@@ -3,14 +3,14 @@ import { CopyOutlined } from '@ant-design/icons';
 import { json } from '@codemirror/lang-json';
 import { css } from '@emotion/react';
 import { Button, message, Space, Tooltip } from 'antd';
-import copy from 'copy-to-clipboard';
+// import copy from 'copy-to-clipboard';
 import { FC, useContext, useRef } from 'react';
 
 import { useCodeMirror } from '../../../helpers/editor/codemirror';
 import { HoppRESTResponse } from '../../../helpers/types/HoppRESTResponse';
 import { GlobalContext, HttpContext } from '../../../index';
 function coppyUrl(url) {
-  copy(url);
+  // copy(url);
   message.success('copy success🎉');
 }
 const JSONLensRenderer: FC<{ response: HoppRESTResponse }> = ({ response }) => {
