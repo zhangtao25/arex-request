@@ -24,7 +24,7 @@ export const ResponseTestHeader = styled.div`
 `;
 
 const ThemeColorPrimaryButton = styled(Button)`
-  color: ${(props) => props.theme.color.primary};
+  color: ${(props) => props.theme.color.primary} !important;
 `;
 
 export const ResponseTestWrapper = styled.div`
