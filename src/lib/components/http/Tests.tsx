@@ -23,6 +23,10 @@ export const ResponseTestHeader = styled.div`
   }
 `;
 
+const ThemeColorPrimaryButton = styled(Button)`
+  color: ${(props) => props.theme.color.primary};
+`;
+
 export const ResponseTestWrapper = styled.div`
   overflow-y: auto;
   display: flex;
@@ -152,9 +156,9 @@ arex.test("Status code is 200", ()=> {
           <span>阅读文档</span>
           <div>代码片段</div> */}
           {codeSnippet.map((e, i) => (
-            <Button type='text' key={i} onClick={() => addTest(e.text)}>
+            <ThemeColorPrimaryButton type='text' key={i} onClick={() => addTest(e.text)}>
               {e.name}
-            </Button>
+            </ThemeColorPrimaryButton>
           ))}
         </div>
       </ResponseTestWrapper>

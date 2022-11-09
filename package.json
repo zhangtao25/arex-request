@@ -1,6 +1,6 @@
 {
   "name": "arex-request",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "type": "module",
   "main": "./src/lib/index.js",
   "scripts": {
