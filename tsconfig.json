@@ -14,8 +14,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "@emotion/react",
-    "outDir": "dist"
+    "jsxImportSource": "@emotion/react"
   },
   "include": ["src/lib"],
   "references": [{ "path": "./tsconfig.node.json" }]
