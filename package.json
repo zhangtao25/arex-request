@@ -2,7 +2,7 @@
   "name": "arex-request",
   "version": "0.0.6",
   "type": "module",
-  "main": "./src/lib2/index.js",
+  "main": "./src/lib/index.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc",
