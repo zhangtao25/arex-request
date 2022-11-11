@@ -1,6 +1,6 @@
 // @ts-nocheck
 import 'allotment/dist/style.css';
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 
 import { css } from '@emotion/react';
 import { Allotment } from 'allotment';
