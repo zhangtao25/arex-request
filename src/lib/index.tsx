@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import { css } from '@emotion/react';
 import { useMount } from 'ahooks';
 import { Allotment } from 'allotment';
-import _ from 'lodash-es';
+// import _ from 'lodash-es';
 import { createContext, FC, useEffect, useImperativeHandle, useReducer } from 'react';
 
 import HttpRequest from './components/http/Request';
@@ -36,7 +36,7 @@ export const GlobalContext = createContext({});
 
 function reducer(state = defaultState, action: { type: string; payload: any }) {
   const cloneState = JSON.parse(JSON.stringify(state));
-  _.set(cloneState, action.type, action.payload);
+  // _.set(cloneState, action.type, action.payload);
   return cloneState;
 }
 
