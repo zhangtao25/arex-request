@@ -1,15 +1,19 @@
 import { DownOutlined } from '@ant-design/icons';
 import { css, ThemeProvider } from '@emotion/react';
 import { Allotment } from 'allotment';
-import { ConfigProvider, Tree } from 'antd';
+import { ConfigProvider, Switch, theme, Tree } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
+const { darkAlgorithm } = theme;
 
+import useDarkMode from 'use-dark-mode';
+
+import AppHeader from './components/app/Header';
 import Http, { HttpProvider } from './lib';
 import { AgentAxiosAndTest, AgentAxiosCompare } from './lib/helpers/request';
 import { mockEnvironmentData, mockRetrieveData } from './mock';
 
 const primaryColor = '#603be3';
-const theme = {
+const theme1 = {
   color: {
     primary: primaryColor,
     active: '#f5f5f5',
@@ -37,23 +41,26 @@ const theme = {
 
 const treeData: any[] = [];
 function App() {
+  const darkMode = useDarkMode();
   return (
     <div>
-      <ConfigProvider locale={zhCN}>
-        <ThemeProvider theme={theme}>
+      <ConfigProvider
+        locale={zhCN}
+        theme={{
+          token: {
+            colorPrimary: '#00b96b',
+          },
+          algorithm: darkMode.value ? [darkAlgorithm] : [],
+        }}
+      >
+        <ThemeProvider theme={theme1}>
           <HttpProvider
-            theme={'light'}
+            theme={'dark'}
             locale={'en'}
             collectionTreeData={[]}
             environment={mockEnvironmentData}
           >
-            <div
-              css={css`
-                height: 48px;
-                background-color: white;
-                border-bottom: 1px solid darkgray;
-              `}
-            ></div>
+            <AppHeader></AppHeader>
 
             <Allotment
               css={css`

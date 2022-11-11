@@ -2,10 +2,10 @@
   "name": "arex-request",
   "version": "0.0.16-beta.16",
   "type": "module",
-  "main": "./src/lib/index.js",
+  "main": "./src/lib/index.tsx",
   "scripts": {
     "dev": "vite",
-    "build": "tsc",
+    "build": "tsc && vite build",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "lint": "prettier --write \"src/**/*.{ts,tsx}\" && eslint \"src/**/*.{ts,tsx}\" --fix"
   },
@@ -32,6 +32,7 @@
     "purple-js-sandbox": "^1.0.14",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "use-dark-mode": "^2.3.1",
     "use-immer": "^0.7.0"
   },
   "devDependencies": {

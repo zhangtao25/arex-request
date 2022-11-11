@@ -11,6 +11,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { useCodeMirror } from '../../helpers/editor/codemirror';
 import { getValueByPath } from '../../helpers/utils/locale';
 import { GlobalContext, HttpContext } from '../../index';
+import useDarkMode from "use-dark-mode";
 
 export const ResponseTestHeader = styled.div`
   display: flex;
@@ -65,6 +66,7 @@ export type ResponseTestProps = {
 };
 
 const HttpTests = ({ getTestVal, OldTestVal }: ResponseTestProps) => {
+  const darkMode = useDarkMode();
   const { store, dispatch } = useContext(HttpContext);
   const { store: globalStore } = useContext(GlobalContext);
   const t = (key) => getValueByPath(globalStore.locale.locale, key);
@@ -131,7 +133,7 @@ arex.test("Status code is 5xx", ()=> {
     value: store.request.testScript,
     height: '100%',
     extensions: [javascript()],
-    theme: globalStore.theme.type,
+    theme: darkMode.value?'dark':'light',
     onChange: (val) => {
       dispatch({
         type: 'request.testScript',

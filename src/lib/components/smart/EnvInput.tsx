@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import { hoverTooltip } from '@codemirror/view';
 import { css } from '@emotion/react';
 import { FC, useContext, useRef } from 'react';
@@ -9,12 +9,14 @@ import {
   HOPP_ENVIRONMENT_REGEX,
 } from '../../helpers/editor/extensions/HoppEnvironment';
 import { GlobalContext, HttpContext } from '../../index';
+import useDarkMode from 'use-dark-mode';
 
 interface SmartEnvInputProps {
   value: string;
   onChange: (e: any) => void;
 }
 const SmartEnvInput: FC<SmartEnvInputProps> = ({ value, onChange }) => {
+  const darkMode = useDarkMode();
   const smartEnvInputRef = useRef(null);
   const { dispatch, store } = useContext(HttpContext);
   const { dispatch: globalDispatch, store: globalStore } = useContext(GlobalContext);
@@ -57,7 +59,7 @@ const SmartEnvInput: FC<SmartEnvInputProps> = ({ value, onChange }) => {
       });
     },
     currentEnv: globalStore.environment,
-    theme: globalStore.theme.type,
+    theme: darkMode.value?'dark':'light',
   });
 
   return (

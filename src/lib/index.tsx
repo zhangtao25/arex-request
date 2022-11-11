@@ -1,6 +1,5 @@
 // @ts-nocheck
 import 'allotment/dist/style.css';
-import 'antd/dist/antd.css';
 
 import { css } from '@emotion/react';
 import { Allotment } from 'allotment';
@@ -143,7 +142,7 @@ const Http: FC<HttpProps> = ({ currentRequestId, onEdit, onSend, onSendCompare, 
       {store.request.method !== '' ? (
         <Allotment
           css={css`
-            height: calc(100vh - 118px);
+            height: 100%
           `}
           vertical={true}
         >
