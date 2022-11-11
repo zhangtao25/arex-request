@@ -160,7 +160,7 @@ const Http: FC<HttpProps> = ({ currentRequestId, onEdit, onSend, onSendCompare, 
                 onEdit={onEdit}
                 onSend={onSend}
                 onSendCompare={onSendCompare}
-              ></HttpRequest>
+              />
               <HttpRequestOptions requestaxios={requestaxios}></HttpRequestOptions>
             </div>
           </Allotment.Pane>

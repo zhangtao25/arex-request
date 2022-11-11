@@ -177,21 +177,23 @@ const HttpRequest = ({ currentRequestId, onEdit, onSend, onSendCompare }) => {
             <Breadcrumb.Item key={index}>{i.title}</Breadcrumb.Item>
           ))}
         </Breadcrumb>
-        <div>
-          <Button
-            onClick={() => {
-              onEdit({
-                type: 'update',
-                payload: {
-                  ...store.request,
-                },
-              });
-            }}
-          >
-            {t('action.save')}
-          </Button>
-        </div>
+
+        <Button
+          size={'small'}
+          style={{marginBottom: '8px'}}
+          onClick={() => {
+            onEdit({
+              type: 'update',
+              payload: {
+                ...store.request,
+              },
+            });
+          }}
+        >
+          {t('action.save')}
+        </Button>
       </div>
+
       <HeaderWrapper>
         <Select
           value={store.request.method}
