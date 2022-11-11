@@ -1,7 +1,7 @@
 {
   "name": "arex-request",
-  "version": "0.0.16-beta.7",
-  "type": "commonjs",
+  "version": "0.0.16-beta.8",
+  "type": "module",
   "main": "./src/lib/index.tsx",
   "scripts": {
     "dev": "vite",
