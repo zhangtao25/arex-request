@@ -1,6 +1,6 @@
 {
   "name": "arex-request",
-  "version": "0.0.14",
+  "version": "0.0.15@beta",
   "type": "module",
   "main": "./src/lib/index.js",
   "scripts": {
@@ -28,7 +28,6 @@
     "codemirror": "^6.0.1",
     "copy-to-clipboard": "^3.3.2",
     "immer": "^9.0.15",
-    "jsoneditor": "^9.9.2",
     "lodash-es": "^4.17.21",
     "purple-js-sandbox": "^1.0.14",
     "react": "^18.2.0",
