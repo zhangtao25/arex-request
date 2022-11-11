@@ -1,6 +1,6 @@
 {
   "name": "arex-request",
-  "version": "0.0.16-beta.6",
+  "version": "0.0.16-beta.7",
   "type": "commonjs",
   "main": "./src/lib/index.tsx",
   "scripts": {
