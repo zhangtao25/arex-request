@@ -56,7 +56,7 @@ const HttpRequestOptions = ({requestaxios}) => {
     {
       label: 'Mock',
       key: '6',
-      children: <ExtraRequestTabItemMock recordId={store.request.recordId} />,
+      children: <ExtraRequestTabItemMock requestaxios={requestaxios} recordId={store.request.recordId} />,
     },
   ].filter((i) => !(i.key === '6' && !store.request.recordId));
   return (
