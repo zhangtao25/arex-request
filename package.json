@@ -1,11 +1,11 @@
 {
   "name": "arex-request",
-  "version": "0.0.16-beta.2",
+  "version": "0.0.16-beta.3",
   "type": "module",
-  "main": "./src/lib/index.tsx",
+  "main": "./src/lib/index.js",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "lint": "prettier --write \"src/**/*.{ts,tsx}\" && eslint \"src/**/*.{ts,tsx}\" --fix"
   },
