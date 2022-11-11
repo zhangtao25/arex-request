@@ -1,8 +1,17 @@
-// @ts-nocheck
+
 import { css } from '@emotion/react';
 import { useMount } from 'ahooks';
 import { Card, Col, Divider, Input, Row } from 'antd';
 import { useState } from 'react';
+
+function tryParseJsonString<T>(jsonString?: string, errorTip?: string) {
+  try {
+    return JSON.parse(jsonString || '{}') as T;
+  } catch (e) {
+    console.error(e);
+    errorTip && message.warn(errorTip);
+  }
+}
 
 // import { tryParseJsonString } from '../../../../helpers/utils';
 
