@@ -3,7 +3,6 @@ import 'allotment/dist/style.css';
 import 'antd/dist/antd.css';
 
 import { css } from '@emotion/react';
-import { useMount } from 'ahooks';
 import { Allotment } from 'allotment';
 import _ from 'lodash-es';
 import { createContext, FC, useEffect, useImperativeHandle, useReducer } from 'react';
@@ -109,7 +108,7 @@ const Http: FC<HttpProps> = ({ currentRequestId, onEdit, onSend, onSendCompare, 
     },
   });
 
-  useMount(() => {
+  useEffect(() => {
     onEdit({
       type: 'retrieve',
       payload: {
@@ -121,7 +120,7 @@ const Http: FC<HttpProps> = ({ currentRequestId, onEdit, onSend, onSendCompare, 
         payload: res,
       });
     });
-  });
+  },[]);
   // 需要将暴露的接口返回出去
   useImperativeHandle(cRef, () => {
     return {

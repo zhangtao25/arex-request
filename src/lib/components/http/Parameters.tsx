@@ -1,6 +1,5 @@
 // @ts-nocheck
 import styled from '@emotion/styled';
-import { useMount } from 'ahooks';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { useImmer } from 'use-immer';
 
@@ -15,14 +14,14 @@ const HttpParameters = () => {
   const t = (key) => getValueByPath(globalStore.locale.locale, key);
   const { dispatch: globalDispatch, store: globalStore } = useContext(GlobalContext);
   const [requestParams, setRequestParams] = useImmer<HoppRESTParam[]>([]);
-  useMount(() => {
+  useEffect(() => {
     setRequestParams(
       store.request.params.map((i) => ({
         ...i,
         id: String(Math.random()),
       })),
     );
-  });
+  },[]);
 
   useEffect(() => {
     dispatch({

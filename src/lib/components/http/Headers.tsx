@@ -6,7 +6,6 @@ import { HoppRESTHeader, HoppRESTParam } from '../../data/rest';
 import FormHeader from './FormHeader';
 import FormTable, { KeyValueType, useColumns } from './FormTable';
 import { useContext, useEffect } from 'react';
-import { useMount } from 'ahooks';
 import { GlobalContext, HttpContext } from '../..';
 import { getValueByPath } from '../../helpers/utils/locale';
 
@@ -15,14 +14,14 @@ const HttpHeaders = () => {
   const [requestHeaders, setRequestHeaders] = useImmer<HoppRESTHeader[]>([]);
   const t = (key) => getValueByPath(globalStore.locale.locale, key);
   const { dispatch: globalDispatch, store: globalStore } = useContext(GlobalContext);
-  useMount(() => {
+  useEffect(() => {
     setRequestHeaders(
       store.request.headers.map((i) => ({
         ...i,
         id: String(Math.random()),
       })),
     );
-  });
+  },[]);
 
   useEffect(() => {
     dispatch({

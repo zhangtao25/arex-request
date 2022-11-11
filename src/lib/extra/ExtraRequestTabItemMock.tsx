@@ -1,8 +1,7 @@
 // @ts-nocheck
 import { css } from '@emotion/react';
-import { useMount } from 'ahooks';
 import { Card, Col, Divider, Input, Row } from 'antd';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 
 function tryParseJsonString<T>(jsonString?: string, errorTip?: string) {
   try {
@@ -33,7 +32,7 @@ const tryPrettierJsonString = (jsonString: string, errorTip?: string) => {
 
 const ExtraRequestTabItemMock = ({ recordId,requestaxios }) => {
   const [dataSource, setDataSource] = useState([]);
-  useMount(() => {
+  useEffect(() => {
     requestaxios
       .post(`/storage/frontEnd/record/queryFixedRecord`, {
         recordId: recordId,
@@ -93,7 +92,7 @@ const ExtraRequestTabItemMock = ({ recordId,requestaxios }) => {
         });
         setDataSource(record);
       });
-  });
+  },[]);
   return (
     <div
       css={css`
