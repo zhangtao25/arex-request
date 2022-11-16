@@ -1,11 +1,11 @@
-// @ts-nocheck
 import { DownOutlined } from '@ant-design/icons';
-import { css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Breadcrumb, Button, Dropdown, Input, Menu, MenuProps, message, Select, Space } from 'antd';
-import { useContext, useEffect, useMemo, useRef } from 'react';
-import { treeFind, treeFindPath } from '../../helpers/collection/util';
-import { getValueByPath } from '../../helpers/utils/locale';
+import { Breadcrumb, Button, Dropdown, Menu, MenuProps, Select } from 'antd';
+import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { treeFindPath } from '../../helpers/collection/util';
 import { GlobalContext, HttpContext } from '../../index';
 import SmartEnvInput from '../smart/EnvInput';
 
@@ -27,14 +27,12 @@ const HeaderWrapper = styled.div`
 
 const methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'];
 
-const HttpRequest = ({ currentRequestId, onEdit, onSend, onSendCompare }) => {
-  const { store, dispatch } = useContext(HttpContext);
-  const { dispatch: globalDispatch, store: globalStore } = useContext(GlobalContext);
-  console.log(globalStore.locale, 'globalStore.locale');
-  const t = (key) => getValueByPath(globalStore.locale.locale, key);
+const HttpRequest = ({ currentRequestId, onEdit, onSend }) => {
+  const { store,dispatch } = useContext(HttpContext);
+  const { store: globalStore } = useContext(GlobalContext);
 
+  const { t } = useTranslation();
   const onMenuClick: MenuProps['onClick'] = (e) => {
-    handleRequest({ type: 'compare' });
   };
 
   const menu = (
@@ -43,15 +41,15 @@ const HttpRequest = ({ currentRequestId, onEdit, onSend, onSendCompare }) => {
       items={[
         {
           key: '1',
-          label: 'Send Compare',
+          label: 'Send C',
         },
       ]}
     />
   );
 
   const handleRequest = ({ type }) => {
+    console.log({type})
     const urlPretreatment = (url: string) => {
-      // 正则匹配{{}}
       const editorValueMatch = url.match(/\{\{(.+?)\}\}/g) || [''];
       let replaceVar = editorValueMatch[0];
       const env = globalStore.environment?.keyValues || [];
@@ -63,13 +61,6 @@ const HttpRequest = ({ currentRequestId, onEdit, onSend, onSendCompare }) => {
 
       return url.replace(editorValueMatch[0], replaceVar);
     };
-
-    console.log(
-      store.request.endpoint,
-      'store.request.endpoint',
-      urlPretreatment(store.request.endpoint),
-    );
-    // return
     dispatch({
       type: 'response.type',
       payload: 'loading',
@@ -77,49 +68,15 @@ const HttpRequest = ({ currentRequestId, onEdit, onSend, onSendCompare }) => {
 
     const start = new Date().getTime();
 
-    console.log(store.request);
-
     if (type === 'compare') {
-      console.log('company？');
-      onSendCompare({
-        request: {
-          ...store.request,
-          endpoint: urlPretreatment(store.request.endpoint),
-        },
-      }).then((agentAxiosCompareResponse: any) => {
-        dispatch({
-          type: 'response.type',
-          payload: 'success',
-        });
-
-        dispatch({
-          type: 'response.body',
-          payload: JSON.stringify(agentAxiosCompareResponse.response.data),
-        });
-
-        dispatch({
-          type: 'compareResponse.type',
-          payload: 'success',
-        });
-
-        dispatch({
-          type: 'compareResponse.body',
-          payload: JSON.stringify(agentAxiosCompareResponse.compareResponse.data),
-        });
-      });
     } else {
-      console.log('norm');
-      // 还原null
-      dispatch({
-        type: 'compareResponse.type',
-        payload: 'null',
-      });
       onSend({
         request: {
           ...store.request,
           endpoint: urlPretreatment(store.request.endpoint),
         },
       }).then((agentAxiosAndTest: any) => {
+        console.log(agentAxiosAndTest,'agentAxiosAndTest')
         dispatch({
           type: 'response.type',
           payload: 'success',
@@ -164,11 +121,9 @@ const HttpRequest = ({ currentRequestId, onEdit, onSend, onSendCompare }) => {
         css={css`
           display: flex;
           justify-content: space-between;
+          margin-bottom: 8px;
         `}
       >
-        {/*{*/}
-        {/*  JSON.stringify(treeFindPath(collectionTreeData,(node)=>node.key === currentRequestId))*/}
-        {/*}*/}
         <Breadcrumb style={{ paddingBottom: '14px' }}>
           {treeFindPath(
             globalStore.collectionTreeData,
@@ -209,10 +164,6 @@ const HttpRequest = ({ currentRequestId, onEdit, onSend, onSendCompare }) => {
             // console.log('http://127.0.0.1:5173/arex-request/');
           }}
         ></SmartEnvInput>
-        {/*<Button type='primary' onClick={handleRequest}>*/}
-        {/*  {t('action.send')}*/}
-        {/*</Button>*/}
-
         <div
           css={css`
             margin: 0 0px 0 14px;

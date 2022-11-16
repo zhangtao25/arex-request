@@ -1,14 +1,10 @@
-// @ts-nocheck
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { javascript } from '@codemirror/lang-javascript';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { List, Progress } from 'antd';
-import { useContext, useRef, useState } from 'react';
+import { useContext } from 'react';
 
-import { useCodeMirror } from '../../helpers/editor/codemirror';
-import { getValueByPath } from '../../helpers/utils/locale';
-import { GlobalContext, HttpContext } from '../../index';
+import { GlobalContext } from '../../index';
 const TestError = styled.div`
   text-align: center;
   & > div:first-of-type {

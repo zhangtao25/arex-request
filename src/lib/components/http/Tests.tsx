@@ -1,17 +1,13 @@
-// @ts-nocheck
-import { DeleteOutlined, PicRightOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { javascript } from '@codemirror/lang-javascript';
-import { json } from '@codemirror/lang-json';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { githubDark, githubLight } from '@uiw/codemirror-theme-github';
-import { Button, Tooltip } from 'antd';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { Button } from 'antd';
+import { useContext, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import useDarkMode from 'use-dark-mode';
 
 import { useCodeMirror } from '../../helpers/editor/codemirror';
-import { getValueByPath } from '../../helpers/utils/locale';
 import { GlobalContext, HttpContext } from '../../index';
-import useDarkMode from "use-dark-mode";
 
 export const ResponseTestHeader = styled.div`
   display: flex;
@@ -60,18 +56,10 @@ export const ResponseTestWrapper = styled.div`
   }
 `;
 
-export type ResponseTestProps = {
-  OldTestVal: string;
-  getTestVal: (p: any) => void;
-};
-
-const HttpTests = ({ getTestVal, OldTestVal }: ResponseTestProps) => {
+const HttpTests = () => {
   const darkMode = useDarkMode();
   const { store, dispatch } = useContext(HttpContext);
-  const { store: globalStore } = useContext(GlobalContext);
-  const t = (key) => getValueByPath(globalStore.locale.locale, key);
-
-  const [TestVal, setTestVal] = useState<string>('');
+  const { t } = useTranslation();
   const [isLineWrapping, setIsLineWrapping] = useState<boolean>(true);
   const codeSnippet = [
     {
@@ -133,7 +121,7 @@ arex.test("Status code is 5xx", ()=> {
     value: store.request.testScript,
     height: '100%',
     extensions: [javascript()],
-    theme: darkMode.value?'dark':'light',
+    theme: darkMode.value ? 'dark' : 'light',
     onChange: (val) => {
       dispatch({
         type: 'request.testScript',
@@ -143,14 +131,10 @@ arex.test("Status code is 5xx", ()=> {
   });
 
   const addTest = (text: string) => {
-    // console.log(store.request.testScript + text,'store.request.testScript + text')
     dispatch({
       type: 'request.testScript',
       payload: store.request.testScript + text,
     });
-  };
-  const feedLine = () => {
-    setIsLineWrapping(!isLineWrapping);
   };
 
   return (
@@ -164,25 +148,12 @@ arex.test("Status code is 5xx", ()=> {
       <ResponseTestHeader>
         <span>{t('preRequest.javascript_code')}</span>
         <div>
-          {/*<Tooltip title={t('help')}>*/}
-          {/*  <Button disabled type='text' icon={<QuestionCircleOutlined />} />*/}
-          {/*</Tooltip>*/}
-          {/*<Tooltip title={t('lineFeed')}>*/}
-          {/*  <Button type='text' icon={<PicRightOutlined />} onClick={feedLine} />*/}
-          {/*</Tooltip>*/}
-          {/*<Tooltip title={t('clearAll')}>*/}
-          {/*  <Button type='text' icon={<DeleteOutlined />} onClick={() => setTestVal('')} />*/}
-          {/*</Tooltip>*/}
         </div>
       </ResponseTestHeader>
       <ResponseTestWrapper>
-        {/*{JSON.stringify(store.request.testScript)}*/}
         <div
           ref={codeCm}
           style={{ width: '65%' }}
-          // options = {{
-          //   lineWrapping:true,
-          // }}
         />
         <div>
           <div>

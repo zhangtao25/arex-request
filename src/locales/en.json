@@ -5,17 +5,21 @@
     "choose_file": "Choose a file",
     "clear": "Clear",
     "clear_all": "Clear all",
+    "close": "Close",
     "connect": "Connect",
+    "connecting": "Connecting",
     "copy": "Copy",
     "delete": "Delete",
     "disconnect": "Disconnect",
     "dismiss": "Dismiss",
     "dont_save": "Don't save",
     "download_file": "Download file",
+    "drag_to_reorder": "Drag to reorder",
     "duplicate": "Duplicate",
     "edit": "Edit",
-    "filter_response": "Filter response",
+    "filter": "Filter",
     "go_back": "Go back",
+    "group_by": "Group by",
     "label": "Label",
     "learn_more": "Learn more",
     "less": "Less",
@@ -33,6 +37,7 @@
     "search": "Search",
     "send": "Send",
     "start": "Start",
+    "starting": "Starting",
     "stop": "Stop",
     "to_close": "to close",
     "to_navigate": "to navigate",
@@ -144,8 +149,7 @@
     "message": "Message {count}",
     "parameter": "Parameter {count}",
     "protocol": "Protocol {count}",
-    "value": "Value",
-    "key": "Key",
+    "value": "Value {count}",
     "variable": "Variable {count}"
   },
   "documentation": {
@@ -167,7 +171,7 @@
     "members": "Team is empty",
     "parameters": "This request does not have any parameters",
     "pending_invites": "There are no pending invites for this team",
-    "profile": "Login in to view your profile",
+    "profile": "Login to view your profile",
     "protocols": "Protocols are empty",
     "schema": "Connect to a GraphQL endpoint to view schema",
     "shortcodes": "Shortcodes are empty",
@@ -183,11 +187,13 @@
     "deleted": "Environment deletion",
     "edit": "Edit Environment",
     "invalid_name": "Please provide a name for the environment",
+    "my_environments": "My Environments",
     "nested_overflow": "nested environment variables are limited to 10 levels",
     "new": "New Environment",
     "no_environment": "No environment",
     "no_environment_description": "No environments were selected. Choose what to do with the following variables.",
     "select": "Select environment",
+    "team_environments": "Team Environments",
     "title": "Environments",
     "updated": "Environment updated",
     "variable_list": "Variable List"
@@ -203,12 +209,13 @@
     "incorrect_email": "Incorrect email",
     "invalid_link": "Invalid link",
     "invalid_link_description": "The link you clicked is invalid or expired.",
-    "json_prettify_invalid_body": "Couldn't prettify an invalid body, solve json syntax errors and try again",
     "json_parsing_failed": "Invalid JSON",
+    "json_prettify_invalid_body": "Couldn't prettify an invalid body, solve json syntax errors and try again",
     "network_error": "There seems to be a network error. Please try again.",
     "network_fail": "Could not send request",
     "no_duration": "No duration",
     "no_results_found": "No matches found",
+    "page_not_found": "This page could not be found",
     "script_fail": "Could not execute pre-request script",
     "something_went_wrong": "Something went wrong",
     "test_script_fail": "Could not execute post-request script"
@@ -219,6 +226,11 @@
     "gist_created": "Gist created",
     "require_github": "Login with GitHub to create secret gist",
     "title": "Export"
+  },
+  "filter": {
+    "all": "All",
+    "none": "None",
+    "starred": "Starred"
   },
   "folder": {
     "created": "Folder created",
@@ -232,6 +244,10 @@
     "mutations": "Mutations",
     "schema": "Schema",
     "subscriptions": "Subscriptions"
+  },
+  "group": {
+    "time": "Time",
+    "url": "URL"
   },
   "header": {
     "install_pwa": "Install app",
@@ -274,12 +290,12 @@
     "from_postman_description": "Import from Postman collection",
     "from_url": "Import from URL",
     "gist_url": "Enter Gist URL",
-    "json_description": "Import collections from a Hoppscotch Collections JSON file",
-    "title": "Import",
-    "import_from_url_success": "Collections Imported",
+    "import_from_url_invalid_fetch": "Couldn't get data from the url",
     "import_from_url_invalid_file_format": "Error while importing collections",
     "import_from_url_invalid_type": "Unsupported type. accepted values are 'hoppscotch', 'openapi', 'postman', 'insomnia'",
-    "import_from_url_invalid_fetch": "Couldn't get data from the url"
+    "import_from_url_success": "Collections Imported",
+    "json_description": "Import collections from a Hoppscotch Collections JSON file",
+    "title": "Import"
   },
   "layout": {
     "collapse_collection": "Collapse or Expand Collections",
@@ -323,6 +339,7 @@
   },
   "profile": {
     "app_settings": "App Settings",
+    "default_hopp_displayname": "Unnamed User",
     "editor": "Editor",
     "editor_description": "Editors can add, edit, and delete requests.",
     "email_verification_mail": "A verification email has been sent to your email address. Please click on the link to verify your email address.",
@@ -351,7 +368,7 @@
     },
     "copy_link": "Copy link",
     "duration": "Duration",
-    "enter_curl": "Enter cURL",
+    "enter_curl": "Enter cURL command",
     "generate_code": "Generate code",
     "generated_code": "Generated code",
     "header_list": "Header List",
@@ -360,7 +377,7 @@
     "name": "Request name",
     "new": "New Request",
     "override": "Override",
-    "override_help": "Set <xmp>Content-Type</xmp> in Headers",
+    "override_help": "Set <kbd>Content-Type</kbd> in Headers",
     "overriden": "Overridden",
     "parameter_list": "Query Parameters",
     "parameters": "Parameters",
@@ -416,7 +433,7 @@
     "extension_version": "Extension Version",
     "extensions": "Browser extension",
     "extensions_use_toggle": "Use the browser extension to send requests (if present)",
-    "follow": "Follow Us",
+    "follow": "Follow us",
     "font_size": "Font size",
     "font_size_large": "Large",
     "font_size_medium": "Medium",
@@ -450,7 +467,17 @@
     "theme_description": "Customize your application theme.",
     "use_experimental_url_bar": "Use experimental URL bar with environment highlighting",
     "user": "User",
+    "verified_email": "Verified email",
     "verify_email": "Verify email"
+  },
+  "shortcodes": {
+    "actions": "Actions",
+    "created_on": "Created on",
+    "deleted": "Shortcode deleted",
+    "method": "Method",
+    "not_found": "Shortcode not found",
+    "short_code": "Short code",
+    "url": "URL"
   },
   "shortcut": {
     "general": {
@@ -490,6 +517,11 @@
       "send_request": "Send Request",
       "title": "Request"
     },
+    "response": {
+      "copy": "Copy response to clipboard",
+      "download": "Download response as file",
+      "title": "Response"
+    },
     "theme": {
       "black": "Switch  theme to black mode",
       "dark": "Switch  theme to  dark mode",
@@ -497,15 +529,6 @@
       "system": "Switch  theme to system mode",
       "title": "Theme"
     }
-  },
-  "shortcodes": {
-    "actions": "Actions",
-    "created_on": "Created on",
-    "deleted": "Shortcode deleted",
-    "method": "Method",
-    "not_found": "Shortcode not found",
-    "short_code": "Short code",
-    "url": "URL"
   },
   "show": {
     "code": "Show code",
@@ -515,11 +538,11 @@
   },
   "socketio": {
     "communication": "Communication",
+    "connection_not_authorized": "This SocketIO connection does not use any authentication.",
     "event_name": "Event Name",
     "events": "Events",
     "log": "Log",
-    "url": "URL",
-    "connection_not_authorized": "This SocketIO connection does not use any authentication."
+    "url": "URL"
   },
   "sse": {
     "event_type": "Event type",
@@ -533,6 +556,9 @@
     "connected": "Connected",
     "connected_to": "Connected to {name}",
     "connecting_to": "Connecting to {name}...",
+    "connection_error": "Failed to connect",
+    "connection_failed": "Connection failed",
+    "connection_lost": "Connection lost",
     "copied_to_clipboard": "Copied to clipboard",
     "deleted": "Deleted",
     "deprecated": "DEPRECATED",
@@ -547,21 +573,18 @@
     "history_deleted": "History deleted",
     "linewrap": "Wrap lines",
     "loading": "Loading...",
-    "none": "None",
-    "nothing_found": "Nothing found for",
-    "waiting_send_request": "Waiting to send request",
-    "subscribed_success": "Successfully subscribed to topic: {topic}",
-    "unsubscribed_success": "Successfully unsubscribed from topic: {topic}",
-    "subscribed_failed": "Failed to subscribe to topic: {topic}",
-    "unsubscribed_failed": "Failed to unsubscribe from topic: {topic}",
-    "published_message": "Published message: {message} to topic: {topic}",
-    "published_error": "Something went wrong while publishing msg: {topic} to topic: {message}",
     "message_received": "Message: {message} arrived on topic: {topic}",
     "mqtt_subscription_failed": "Something went wrong while subscribing to topic: {topic}",
-    "connection_lost": "Connection lost",
-    "connection_failed": "Connection failed",
-    "connection_error": "Failed to connect",
-    "reconnection_error": "Failed to reconnect"
+    "none": "None",
+    "nothing_found": "Nothing found for",
+    "published_error": "Something went wrong while publishing msg: {topic} to topic: {message}",
+    "published_message": "Published message: {message} to topic: {topic}",
+    "reconnection_error": "Failed to reconnect",
+    "subscribed_failed": "Failed to subscribe to topic: {topic}",
+    "subscribed_success": "Successfully subscribed to topic: {topic}",
+    "unsubscribed_failed": "Failed to unsubscribe from topic: {topic}",
+    "unsubscribed_success": "Successfully unsubscribed from topic: {topic}",
+    "waiting_send_request": "Waiting to send request"
   },
   "support": {
     "changelog": "Read more about latest releases",
@@ -643,6 +666,11 @@
     "title": "Teams",
     "we_sent_invite_link": "We sent an invite link to all invitees!",
     "we_sent_invite_link_description": "Ask all invitees to check their inbox. Click on the link to join the team."
+  },
+  "team_environment": {
+    "deleted": "Environment Deleted",
+    "duplicate": "Environment Duplicated",
+    "not_found": "Environment not found."
   },
   "test": {
     "failed": "test failed",

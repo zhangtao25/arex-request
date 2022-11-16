@@ -1,19 +1,17 @@
-// @ts-nocheck
-import styled from '@emotion/styled';
+import { useContext, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useImmer } from 'use-immer';
-import { HoppRESTHeader, HoppRESTParam } from '../../data/rest';
 
+import { GlobalContext, HttpContext } from '../..';
+import { HoppRESTHeader } from '../../data/rest';
 import FormHeader from './FormHeader';
 import FormTable, { KeyValueType, useColumns } from './FormTable';
-import { useContext, useEffect } from 'react';
-import { GlobalContext, HttpContext } from '../..';
-import { getValueByPath } from '../../helpers/utils/locale';
 
 const HttpHeaders = () => {
+  const { t } = useTranslation();
   const { store, dispatch } = useContext(HttpContext);
   const [requestHeaders, setRequestHeaders] = useImmer<HoppRESTHeader[]>([]);
-  const t = (key) => getValueByPath(globalStore.locale.locale, key);
-  const { dispatch: globalDispatch, store: globalStore } = useContext(GlobalContext);
+
   useEffect(() => {
     setRequestHeaders(
       store.request.headers.map((i) => ({
@@ -21,7 +19,7 @@ const HttpHeaders = () => {
         id: String(Math.random()),
       })),
     );
-  },[]);
+  }, []);
 
   useEffect(() => {
     dispatch({

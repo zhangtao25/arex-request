@@ -12,8 +12,8 @@ import Http, { HttpProvider } from './lib';
 import { AgentAxiosAndTest, AgentAxiosCompare } from './lib/helpers/request';
 import { mockEnvironmentData, mockRetrieveData } from './mock';
 
-const primaryColor = '#603be3';
-const theme1 = {
+const primaryColor = '#00b96b';
+const themeLight = {
   color: {
     primary: primaryColor,
     active: '#f5f5f5',
@@ -38,25 +38,54 @@ const theme1 = {
     },
   },
 };
+const themeDark = {
+  color: {
+    primary: primaryColor,
+    active: 'rgba(255, 255, 255, 0.08)',
+    success: '#2e7d32',
+    info: '#0288d1',
+    warning: '#ed6c02',
+    error: '#d32f2f',
+    text: {
+      primary: 'rgba(255, 255, 255, 0.9)',
+      secondary: 'rgba(255, 255, 255, 0.6)',
+      disabled: 'rgba(255, 255, 255, 0.3)',
+      watermark: 'rgba(255, 255, 255, 0.1)',
+      highlight: primaryColor,
+    },
+    border: {
+      primary: '#303030',
+    },
+    background: {
+      primary: '#202020',
+      active: '#FFFFFF0A',
+      hover: '#444',
+    },
+  },
+};
 
 const treeData: any[] = [];
+
 function App() {
+  // 明亮、黑暗主题
   const darkMode = useDarkMode();
   return (
     <div>
+      {/*antd全剧配置*/}
       <ConfigProvider
         locale={zhCN}
         theme={{
           token: {
             colorPrimary: '#00b96b',
           },
+          // 黑暗主题
           algorithm: darkMode.value ? [darkAlgorithm] : [],
         }}
       >
-        <ThemeProvider theme={theme1}>
+        {/*emotion主题配置*/}
+        <ThemeProvider theme={darkMode.value ? themeDark : themeLight}>
+          {/*自定义主题*/}
           <HttpProvider
-            theme={'dark'}
-            locale={'en'}
             collectionTreeData={[]}
             environment={mockEnvironmentData}
           >

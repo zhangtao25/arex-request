@@ -1,18 +1,13 @@
-// @ts-nocheck
 import { css } from '@emotion/react';
 import { Empty, Spin, Typography } from 'antd';
-import { FC, useContext, useMemo } from 'react';
+import { FC, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { HoppRESTResponse } from '../../helpers/types/HoppRESTResponse';
 import { getStatusCodeReasonPhrase } from '../../helpers/utils/statusCodes';
-import { getValueByPath } from '../../helpers/utils/locale';
-import { GlobalContext, HttpContext } from '../../index';
 
 const HttpResponseMeta: FC<{ response: HoppRESTResponse }> = ({ response }) => {
-  const { store } = useContext(HttpContext);
-  const { store: globalStore } = useContext(GlobalContext);
-
-  const t = (key) => getValueByPath(globalStore.locale.locale, key);
+  const { t } = useTranslation();
   const tabCss = css`
     color: #10b981;
     font-weight: bolder;

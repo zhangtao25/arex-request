@@ -2,13 +2,12 @@ import { json } from '@codemirror/lang-json';
 import { css } from '@emotion/react';
 import { Button, message } from 'antd';
 import { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import useDarkMode from 'use-dark-mode';
 
 import { useCodeMirror } from '../../helpers/editor/codemirror';
 import { GlobalContext, HttpContext } from '../../index';
-import useDarkMode from 'use-dark-mode';
 const HttpRawBody = ({ cRef }) => {
   const rawBodyParameters = useRef(null);
-  const { store: globalStore } = useContext(GlobalContext);
   const { store, dispatch } = useContext(HttpContext);
   const darkMode = useDarkMode();
   useCodeMirror({
@@ -16,7 +15,7 @@ const HttpRawBody = ({ cRef }) => {
     value: store.request.body.body,
     height: '100%',
     extensions: [json()],
-    theme: darkMode.value?'dark':'light',
+    theme: darkMode.value ? 'dark' : 'light',
     onChange: (val) => {
       dispatch({
         type: 'request.body.body',

@@ -1,13 +1,12 @@
-// @ts-nocheck
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { Col, Row } from 'antd';
 import { FC } from 'react';
 
 import { HoppRESTHeader } from '../../data/rest';
 
-const test = css`
-  border-right: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+const Test = styled.div`
+  border-right: 1px solid ${(props) => props.theme.color.border.primary};
+  border-bottom: 1px solid ${(props) => props.theme.color.border.primary};
   padding: 6px;
 `;
 
@@ -16,11 +15,11 @@ const LensesHeadersRendererEntry: FC<{ header: HoppRESTHeader }> = ({ header }) 
     <div>
       <Row>
         <Col className='gutter-row' span={12}>
-          <div css={test}>{header.key}</div>
+          <Test>{header.key}</Test>
         </Col>
 
         <Col className='gutter-row' span={12}>
-          <div css={test}> {header.value}</div>
+          <Test> {header.value}</Test>
         </Col>
       </Row>
     </div>

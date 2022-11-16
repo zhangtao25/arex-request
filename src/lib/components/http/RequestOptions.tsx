@@ -1,21 +1,17 @@
-// @ts-nocheck
 import { css } from '@emotion/react';
 import { Badge, Tabs, Tag } from 'antd';
 import { useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import ExtraRequestTabItemCompare from '../../extra/ExtraRequestTabItemCompare';
-import ExtraRequestTabItemMock from '../../extra/ExtraRequestTabItemMock';
-import { getValueByPath } from '../../helpers/utils/locale';
 import { GlobalContext, HttpContext } from '../../index';
 import HttpBody from './Body';
 import HttpHeaders from './Headers';
 import HttpParameters from './Parameters';
 import HttpTests from './Tests';
-const HttpRequestOptions = ({requestaxios}) => {
+const HttpRequestOptions = () => {
   const { store } = useContext(HttpContext);
-  const t = (key) => getValueByPath(globalStore.locale.locale, key);
+  const { t } = useTranslation();
   const [activeKey, setActiveKey] = useState('3');
-  const { dispatch: globalDispatch, store: globalStore } = useContext(GlobalContext);
 
   const items = [
     {
@@ -52,13 +48,7 @@ const HttpRequestOptions = ({requestaxios}) => {
     },
     { label: t('tab.body'), key: '3', children: <HttpBody /> },
     { label: t('tab.tests'), key: '4', children: <HttpTests /> },
-    { label: 'Compare', key: '5', children: <ExtraRequestTabItemCompare requestaxios={requestaxios} /> },
-    {
-      label: 'Mock',
-      key: '6',
-      children: <ExtraRequestTabItemMock requestaxios={requestaxios} recordId={store.request.recordId} />,
-    },
-  ].filter((i) => !(i.key === '6' && !store.request.recordId));
+  ];
   return (
     <div
       css={css`
