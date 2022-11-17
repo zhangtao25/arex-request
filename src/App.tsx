@@ -6,7 +6,7 @@ import zhCN from 'antd/es/locale/zh_CN';
 const { darkAlgorithm } = theme;
 
 import AppHeader from './components/app/Header';
-import useDarkMode from './hooks/useDarkMode';
+import useDarkMode from 'use-dark-style';
 import Http, { HttpProvider } from './lib';
 import { AgentAxiosAndTest, AgentAxiosCompare } from './lib/helpers/request';
 import { mockEnvironmentData, mockRetrieveData } from './mock';

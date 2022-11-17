@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Select, Switch } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import useDarkMode from './../../hooks/useDarkMode';
+import useDarkMode from 'use-dark-style';
 const Wrapper = styled.div`
   height: 47px;
   border-bottom: 1px solid ${(props) => props.theme.color.border.primary};
