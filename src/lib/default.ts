@@ -83,12 +83,12 @@ export const defaultState = {
   testResult: {},
 };
 
-export enum LocaleEnum {
-  en = 'en',
-  cn = 'cn',
-}
+export const Locale = {
+  en: 'en',
+  cn: 'cn',
+};
 
-export enum ThemeEnum {
-  light = 'light',
-  dark = 'dark',
-}
+export const Theme = {
+  light: 'light',
+  dark: 'dark',
+};

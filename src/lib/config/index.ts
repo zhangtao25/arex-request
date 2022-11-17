@@ -11,7 +11,12 @@ type HttpProfile = {
 
 const config = (profile: HttpProfile) => {
   if (profile.tabs.extra) {
-    extraTabs = [...extraTabs, ...profile.tabs.extra];
+    extraTabs = profile?.tabs?.extra.reduce((tabs, cur) => {
+      if (!tabs.find((item) => item.key === cur.key)) {
+        tabs.push(cur);
+      }
+      return tabs;
+    }, extraTabs);
   }
 };
 

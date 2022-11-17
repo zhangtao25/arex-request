@@ -20,13 +20,13 @@ import HttpRequestOptions from './components/http/RequestOptions';
 import HttpResponse from './components/http/Response';
 import TestResult from './components/http/TestResult';
 import config from './config';
-import { defaultState, globalDefaultState, LocaleEnum, ThemeEnum } from './default';
+import { defaultState, globalDefaultState, Locale, Theme } from './default';
 import cn from './locales/cn.json';
 import en from './locales/en.json';
 import { themeMap } from './theme';
 
-export type LocaleInterface = Record<LocaleEnum, { type: string; locale: any }>;
-export type ThemeInterface = Record<ThemeEnum, { type: string; locale: any }>;
+export type LocaleInterface = Record<Locale, { type: string; locale: any }>;
+export type ThemeInterface = Record<Theme, { type: string; locale: any }>;
 
 const localeMap: LocaleInterface = {
   cn: {
@@ -57,8 +57,8 @@ interface HttpProps {
 
 interface HttpProviderProps {
   children: ReactNode;
-  theme: ThemeEnum;
-  locale: LocaleEnum;
+  theme: Theme;
+  locale: Locale;
   collectionTreeData: any;
   environment: any;
 }
@@ -66,7 +66,7 @@ interface HttpProviderProps {
 const HttpProvider: FC<HttpProviderProps> = ({
   children,
   theme,
-  locale = LocaleEnum.en,
+  locale = Locale.en,
   collectionTreeData = [],
   environment,
 }) => {
@@ -192,4 +192,4 @@ Http.config = config;
 
 export default Http;
 
-export { config, HttpProvider, TestResult };
+export { config, HttpProvider, TestResult, Locale, Theme };

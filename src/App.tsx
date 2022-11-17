@@ -7,7 +7,7 @@ import zhCN from 'antd/es/locale/zh_CN';
 import Http, { HttpProvider } from './lib';
 import { AgentAxiosAndTest, AgentAxiosCompare } from './lib/helpers/request';
 import { mockEnvironmentData, mockRetrieveData } from './mock';
-import { LocaleEnum, ThemeEnum } from './lib/default';
+import { Locale, Theme } from './lib/default';
 
 const primaryColor = '#603be3';
 const theme = {
@@ -68,8 +68,8 @@ function App() {
       <ConfigProvider locale={zhCN}>
         <ThemeProvider theme={theme}>
           <HttpProvider
-            theme={ThemeEnum.light}
-            locale={LocaleEnum.en}
+            theme={Theme.light}
+            locale={Locale.en}
             collectionTreeData={[]}
             environment={mockEnvironmentData}
           >
