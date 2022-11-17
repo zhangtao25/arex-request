@@ -1,6 +1,6 @@
 {
   "name": "arex-request",
-  "version": "0.0.16-beta.17",
+  "version": "0.0.16-beta.18",
   "type": "module",
   "main": "./src/lib/index.tsx",
   "scripts": {
@@ -21,7 +21,6 @@
     "@emotion/react": "^11.10.4",
     "@emotion/serialize": "^1.1.0",
     "@emotion/styled": "^11.10.4",
-    "@fisch0920/use-dark-mode": "^2.4.0",
     "@uiw/codemirror-theme-github": "^4.12.4",
     "ahooks": "^3.7.1",
     "allotment": "^1.17.0",

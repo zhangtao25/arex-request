@@ -2,7 +2,7 @@ import { json } from '@codemirror/lang-json';
 import { css } from '@emotion/react';
 import { Button, message } from 'antd';
 import { useContext, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import useDarkMode from 'use-dark-mode';
+import useDarkMode from './../../../hooks/useDarkMode';
 
 import { useCodeMirror } from '../../helpers/editor/codemirror';
 import { GlobalContext, HttpContext } from '../../index';

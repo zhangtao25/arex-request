@@ -1,7 +1,7 @@
 import { hoverTooltip } from '@codemirror/view';
 import { css, useTheme } from '@emotion/react';
 import { FC, useContext, useRef } from 'react';
-import useDarkMode from 'use-dark-mode';
+import useDarkMode from './../../../hooks/useDarkMode';
 
 import { useEnvCodeMirror } from '../../helpers/editor/extensions/EnvCodeMirror';
 import {

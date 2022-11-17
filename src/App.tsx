@@ -5,9 +5,8 @@ import { ConfigProvider, Switch, theme, Tree } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 const { darkAlgorithm } = theme;
 
-import useDarkMode from 'use-dark-mode';
-
 import AppHeader from './components/app/Header';
+import useDarkMode from './hooks/useDarkMode';
 import Http, { HttpProvider } from './lib';
 import { AgentAxiosAndTest, AgentAxiosCompare } from './lib/helpers/request';
 import { mockEnvironmentData, mockRetrieveData } from './mock';
@@ -85,10 +84,7 @@ function App() {
         {/*emotion主题配置*/}
         <ThemeProvider theme={darkMode.value ? themeDark : themeLight}>
           {/*自定义主题*/}
-          <HttpProvider
-            collectionTreeData={[]}
-            environment={mockEnvironmentData}
-          >
+          <HttpProvider collectionTreeData={[]} environment={mockEnvironmentData}>
             <AppHeader></AppHeader>
 
             <Allotment
@@ -97,6 +93,7 @@ function App() {
               `}
             >
               <Allotment.Pane preferredSize={400}>
+                {JSON.stringify(darkMode.value)}
                 <Tree
                   showLine
                   switcherIcon={<DownOutlined />}

@@ -2,11 +2,13 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Select, Switch } from 'antd';
 import { useTranslation } from 'react-i18next';
-import useDarkMode from 'use-dark-mode';
+
+import useDarkMode from './../../hooks/useDarkMode';
 const Wrapper = styled.div`
   height: 47px;
   border-bottom: 1px solid ${(props) => props.theme.color.border.primary};
   display: flex;
+  transition: border-bottom 0.3s ease;
 `;
 const AppHeader = () => {
   const darkMode = useDarkMode(true);
@@ -14,14 +16,10 @@ const AppHeader = () => {
   return (
     <Wrapper>
       <div>
-        {JSON.stringify(darkMode)}
-        <button type='button' onClick={darkMode.disable}>
-          ☀
-        </button>
+        {JSON.stringify(darkMode.value)}
+        <button type='button'>☀</button>
         <Switch checked={darkMode.value} onChange={darkMode.toggle} />
-        <button type='button' onClick={darkMode.enable}>
-          ☾
-        </button>
+        <button type='button'>☾</button>
       </div>
 
       <div>

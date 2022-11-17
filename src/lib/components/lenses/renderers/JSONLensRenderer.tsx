@@ -4,7 +4,7 @@ import { EditorView } from '@codemirror/view';
 import { css } from '@emotion/react';
 import { Button, message, Space, Tooltip } from 'antd';
 import { FC, useContext, useRef } from 'react';
-import useDarkMode from 'use-dark-mode';
+import useDarkMode from './../../../../hooks/useDarkMode';
 
 import { useCodeMirror } from '../../../helpers/editor/codemirror';
 import { HoppRESTResponse } from '../../../helpers/types/HoppRESTResponse';

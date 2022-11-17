@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { Button } from 'antd';
 import { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import useDarkMode from 'use-dark-mode';
+import useDarkMode from './../../../hooks/useDarkMode';
 
 import { useCodeMirror } from '../../helpers/editor/codemirror';
 import { GlobalContext, HttpContext } from '../../index';
