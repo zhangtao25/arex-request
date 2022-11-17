@@ -30,24 +30,21 @@ const methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'];
 const HttpRequest = ({ currentRequestId, onEdit, onSend, onSendCompare }) => {
   const { store, dispatch } = useContext(HttpContext);
   const { dispatch: globalDispatch, store: globalStore } = useContext(GlobalContext);
-  console.log(globalStore.locale, 'globalStore.locale');
   const t = (key) => getValueByPath(globalStore.locale.locale, key);
 
   const onMenuClick: MenuProps['onClick'] = (e) => {
     handleRequest({ type: 'compare' });
   };
 
-  const menu = (
-    <Menu
-      onClick={onMenuClick}
-      items={[
-        {
-          key: '1',
-          label: 'Send Compare',
-        },
-      ]}
-    />
-  );
+  const menu = {
+    onClick: onMenuClick,
+    items: [
+      {
+        key: '1',
+        label: 'Send Compare',
+      },
+    ],
+  };
 
   const handleRequest = ({ type }) => {
     const urlPretreatment = (url: string) => {
@@ -180,7 +177,7 @@ const HttpRequest = ({ currentRequestId, onEdit, onSend, onSendCompare }) => {
 
         <Button
           size={'small'}
-          style={{marginBottom: '8px'}}
+          style={{ marginBottom: '8px' }}
           onClick={() => {
             onEdit({
               type: 'update',
@@ -210,20 +207,16 @@ const HttpRequest = ({ currentRequestId, onEdit, onSend, onSendCompare }) => {
           onChange={() => {
             // console.log('http://127.0.0.1:5173/arex-request/');
           }}
-        ></SmartEnvInput>
+        />
         {/*<Button type='primary' onClick={handleRequest}>*/}
         {/*  {t('action.send')}*/}
         {/*</Button>*/}
 
-        <div
-          css={css`
-            margin: 0 0px 0 14px;
-          `}
-        >
+        <div style={{ marginLeft: '12px' }}>
           <Dropdown.Button
             type='primary'
             onClick={() => handleRequest({ type: null })}
-            overlay={menu}
+            menu={menu}
             icon={<DownOutlined />}
           >
             {t('action.send')}

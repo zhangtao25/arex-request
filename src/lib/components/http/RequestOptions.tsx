@@ -1,9 +1,10 @@
 // @ts-nocheck
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Tabs, Tag } from 'antd';
+import { Tabs, TabsProps, Tag } from 'antd';
 import { useContext, useState } from 'react';
 
+import { extraTabs } from '../../config';
 import ExtraRequestTabItemCompare from '../../extra/ExtraRequestTabItemCompare';
 import ExtraRequestTabItemMock from '../../extra/ExtraRequestTabItemMock';
 import { getValueByPath } from '../../helpers/utils/locale';
@@ -17,19 +18,18 @@ const ParamCount = styled<{ count: number }>((props) => <Tag {...props}>{props.c
   display: ${(props) => (props.count > 0 ? 'inline-block' : 'none')};
   border-radius: 6px;
   height: 18px;
-  width: 18px;
   line-height: 16px;
   padding: 0 4px;
   margin-left: 4px;
 `;
 
-const HttpRequestOptions = ({ requestaxios }) => {
+const HttpRequestOptions = ({ requestAxios }) => {
   const { store } = useContext(HttpContext);
   const t = (key) => getValueByPath(globalStore.locale.locale, key);
-  const [activeKey, setActiveKey] = useState('3');
+  const [activeKey, setActiveKey] = useState('__body__');
   const { dispatch: globalDispatch, store: globalStore } = useContext(GlobalContext);
 
-  const items = [
+  const items: TabsProps['items'] = [
     {
       label: (
         <div>
@@ -37,7 +37,7 @@ const HttpRequestOptions = ({ requestaxios }) => {
           <ParamCount count={store.request.params.length} />
         </div>
       ),
-      key: '0',
+      key: '__parameters__',
       children: <HttpParameters />,
     },
     {
@@ -47,23 +47,24 @@ const HttpRequestOptions = ({ requestaxios }) => {
           <ParamCount count={store.request.headers.length} />
         </div>
       ),
-      key: '1',
+      key: '__headers__',
       children: <HttpHeaders />,
     },
-    { label: t('tab.body'), key: '3', children: <HttpBody /> },
-    { label: t('tab.tests'), key: '4', children: <HttpTests /> },
+    { label: t('tab.body'), key: '__body__', children: <HttpBody /> },
+    { label: t('tab.tests'), key: '__tests__', children: <HttpTests /> },
     {
       label: 'Compare',
-      key: '5',
-      children: <ExtraRequestTabItemCompare requestaxios={requestaxios} />,
+      key: '__compare__',
+      children: <ExtraRequestTabItemCompare requestAxios={requestAxios} />,
     },
     {
       label: 'Mock',
-      key: '6',
+      key: '__mock__',
       children: (
-        <ExtraRequestTabItemMock requestaxios={requestaxios} recordId={store.request.recordId} />
+        <ExtraRequestTabItemMock requestAxios={requestAxios} recordId={store.request.recordId} />
       ),
     },
+    ...extraTabs,
   ].filter((i) => !(i.key === '6' && !store.request.recordId));
   return (
     <div

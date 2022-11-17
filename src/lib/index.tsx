@@ -6,12 +6,20 @@ import { css } from '@emotion/react';
 import { useMount } from 'ahooks';
 import { Allotment } from 'allotment';
 import _ from 'lodash-es';
-import { createContext, FC, useEffect, useImperativeHandle, useReducer } from 'react';
+import React, {
+  createContext,
+  FC,
+  ReactNode,
+  useEffect,
+  useImperativeHandle,
+  useReducer,
+} from 'react';
 
 import HttpRequest from './components/http/Request';
 import HttpRequestOptions from './components/http/RequestOptions';
 import HttpResponse from './components/http/Response';
 import TestResult from './components/http/TestResult';
+import config from './config';
 import { defaultState, globalDefaultState, LocaleEnum, ThemeEnum } from './default';
 import cn from './locales/cn.json';
 import en from './locales/en.json';
@@ -31,8 +39,8 @@ const localeMap: LocaleInterface = {
   },
 };
 
-export const HttpContext = createContext({});
-export const GlobalContext = createContext({});
+export const HttpContext = createContext(defaultState);
+export const GlobalContext = createContext(globalDefaultState);
 
 function reducer(state = defaultState, action: { type: string; payload: any }) {
   const cloneState = JSON.parse(JSON.stringify(state));
@@ -48,7 +56,7 @@ interface HttpProps {
 }
 
 interface HttpProviderProps {
-  children: any;
+  children: ReactNode;
   theme: ThemeEnum;
   locale: LocaleEnum;
   collectionTreeData: any;
@@ -56,7 +64,7 @@ interface HttpProviderProps {
 }
 
 const HttpProvider: FC<HttpProviderProps> = ({
-  children = null,
+  children,
   theme,
   locale = LocaleEnum.en,
   collectionTreeData = [],
@@ -101,7 +109,14 @@ const HttpProvider: FC<HttpProviderProps> = ({
 3. 字典例如 onSend以后触发的函数名称，返回值里面需要包含{testResult,response}
 4. 导出的方法
 * */
-const Http: FC<HttpProps> = ({ currentRequestId, onEdit, onSend, onSendCompare, cRef,requestaxios }) => {
+const Http: FC<HttpProps> & { config: typeof config } = ({
+  currentRequestId,
+  onEdit,
+  onSend,
+  onSendCompare,
+  cRef,
+  requestAxios,
+}) => {
   const [store, dispatch] = useReducer(reducer, {
     ...defaultState,
     request: {
@@ -161,11 +176,11 @@ const Http: FC<HttpProps> = ({ currentRequestId, onEdit, onSend, onSendCompare, 
                 onSend={onSend}
                 onSendCompare={onSendCompare}
               />
-              <HttpRequestOptions requestaxios={requestaxios}></HttpRequestOptions>
+              <HttpRequestOptions requestAxios={requestAxios} />
             </div>
           </Allotment.Pane>
           <Allotment.Pane>
-            <HttpResponse requestaxios={requestaxios} />
+            <HttpResponse requestAxios={requestAxios} />
           </Allotment.Pane>
         </Allotment>
       ) : null}
@@ -173,8 +188,8 @@ const Http: FC<HttpProps> = ({ currentRequestId, onEdit, onSend, onSendCompare, 
   );
 };
 
+Http.config = config;
+
 export default Http;
 
-export { HttpProvider };
-
-export { TestResult };
+export { config, HttpProvider, TestResult };

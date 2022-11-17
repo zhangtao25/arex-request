@@ -7,6 +7,7 @@ import zhCN from 'antd/es/locale/zh_CN';
 import Http, { HttpProvider } from './lib';
 import { AgentAxiosAndTest, AgentAxiosCompare } from './lib/helpers/request';
 import { mockEnvironmentData, mockRetrieveData } from './mock';
+import { LocaleEnum, ThemeEnum } from './lib/default';
 
 const primaryColor = '#603be3';
 const theme = {
@@ -36,14 +37,39 @@ const theme = {
 };
 
 const treeData: any[] = [];
+
+Http.config({
+  tabs: {
+    extra: [
+      {
+        label: 'extraTab',
+        key: 'extraTab',
+        children: <div>extraTab content</div>,
+      },
+    ],
+  },
+});
+
+Http.config({
+  tabs: {
+    extra: [
+      {
+        label: 'anotherExtraTab',
+        key: 'anotherExtraTab',
+        children: <div>anotherExtraTab content</div>,
+      },
+    ],
+  },
+});
+
 function App() {
   return (
     <div>
       <ConfigProvider locale={zhCN}>
         <ThemeProvider theme={theme}>
           <HttpProvider
-            theme={'light'}
-            locale={'en'}
+            theme={ThemeEnum.light}
+            locale={LocaleEnum.en}
             collectionTreeData={[]}
             environment={mockEnvironmentData}
           >
@@ -90,7 +116,6 @@ function App() {
                   onSendCompare={(e) => {
                     return AgentAxiosCompare(e);
                   }}
-                  requestaxios={{}}
                 />
               </Allotment.Pane>
             </Allotment>

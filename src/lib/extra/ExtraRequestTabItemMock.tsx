@@ -1,4 +1,3 @@
-
 import { css } from '@emotion/react';
 import { useMount } from 'ahooks';
 import { Card, Col, Divider, Input, Row } from 'antd';
@@ -30,11 +29,10 @@ const tryPrettierJsonString = (jsonString: string, errorTip?: string) => {
   }
 };
 
-
-const ExtraRequestTabItemMock = ({ recordId,requestaxios }) => {
+const ExtraRequestTabItemMock = ({ recordId, requestAxios }) => {
   const [dataSource, setDataSource] = useState([]);
   useMount(() => {
-    requestaxios
+    requestAxios
       .post(`/storage/frontEnd/record/queryFixedRecord`, {
         recordId: recordId,
         categoryTypes: 0,

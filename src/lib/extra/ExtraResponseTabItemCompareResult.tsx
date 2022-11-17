@@ -9,8 +9,8 @@ import { GlobalContext } from '../index';
 
 const onChange = (key: string) => {};
 
-const ExtraResponseTabItemCompareResult = ({ responses,requestaxios }) => {
-  console.log(requestaxios,'requestaxios')
+const ExtraResponseTabItemCompareResult = ({ responses, requestAxios }) => {
+  console.log(requestAxios, 'requestAxios');
   const { store: globalStore } = useContext(GlobalContext);
   console.log(responses, 'responses');
   const diffView = useRef<HTMLDivElement>();
@@ -98,7 +98,7 @@ const ExtraResponseTabItemCompareResult = ({ responses,requestaxios }) => {
           testMsg: JSON.stringify(removeNull(responses[1])),
         },
       };
-      requestaxios.post('/api/compare/quickCompare', params).then((res) => {
+      requestAxios.post('/api/compare/quickCompare', params).then((res) => {
         setDataSource(res.body.diffDetails.map((i) => i.logs[0]));
       });
 
