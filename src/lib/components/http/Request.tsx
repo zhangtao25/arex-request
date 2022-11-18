@@ -25,28 +25,35 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-const methods = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'];
+const METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'];
+enum SEND_MENU_TYPE {
+  'normal' = 'normal',
+  'compare' = 'compare',
+  'arexRecord' = 'arexRecord',
+}
 
 const HttpRequest = ({ currentRequestId, onEdit, onSend, onSendCompare }) => {
   const { store, dispatch } = useContext(HttpContext);
   const { dispatch: globalDispatch, store: globalStore } = useContext(GlobalContext);
   const t = (key) => getValueByPath(globalStore.locale.locale, key);
 
-  const onMenuClick: MenuProps['onClick'] = (e) => {
-    handleRequest({ type: 'compare' });
-  };
-
-  const menu = {
-    onClick: onMenuClick,
+  const menu: MenuProps = {
+    onClick: (e) => {
+      handleRequest(e.key);
+    },
     items: [
       {
-        key: '1',
+        key: SEND_MENU_TYPE.compare,
         label: 'Send Compare',
+      },
+      {
+        key: SEND_MENU_TYPE.arexRecord,
+        label: 'Send Arex Record',
       },
     ],
   };
 
-  const handleRequest = ({ type }) => {
+  const handleRequest = (type) => {
     const urlPretreatment = (url: string) => {
       // 正则匹配{{}}
       const editorValueMatch = url.match(/\{\{(.+?)\}\}/g) || [''];
@@ -61,12 +68,6 @@ const HttpRequest = ({ currentRequestId, onEdit, onSend, onSendCompare }) => {
       return url.replace(editorValueMatch[0], replaceVar);
     };
 
-    console.log(
-      store.request.endpoint,
-      'store.request.endpoint',
-      urlPretreatment(store.request.endpoint),
-    );
-    // return
     dispatch({
       type: 'response.type',
       payload: 'loading',
@@ -74,10 +75,58 @@ const HttpRequest = ({ currentRequestId, onEdit, onSend, onSendCompare }) => {
 
     const start = new Date().getTime();
 
-    console.log(store.request);
+    if (SEND_MENU_TYPE.normal === type || SEND_MENU_TYPE.arexRecord === type) {
+      dispatch({
+        type: 'compareResponse.type',
+        payload: 'null',
+      });
 
-    if (type === 'compare') {
-      console.log('company？');
+      const requestParams = { ...store.request, endpoint: urlPretreatment(store.request.endpoint) };
+      if (type === SEND_MENU_TYPE.arexRecord) {
+        requestParams.headers.push({
+          key: 'arex-record-id',
+          value: currentRequestId,
+          active: true,
+        });
+      }
+
+      onSend({
+        request: requestParams,
+      }).then((agentAxiosAndTest: any) => {
+        dispatch({
+          type: 'response.type',
+          payload: 'success',
+        });
+
+        dispatch({
+          type: 'response.body',
+          payload: JSON.stringify(agentAxiosAndTest.response.data),
+        });
+
+        dispatch({
+          type: 'testResult',
+          payload: agentAxiosAndTest.testResult,
+        });
+        console.log({ type });
+        dispatch({
+          type: 'response.headers',
+          payload: agentAxiosAndTest.response.headers,
+        });
+
+        dispatch({
+          type: 'response.meta',
+          payload: {
+            responseSize: JSON.stringify(agentAxiosAndTest.response.data).length,
+            responseDuration: new Date().getTime() - start,
+          },
+        });
+
+        dispatch({
+          type: 'response.statusCode',
+          payload: agentAxiosAndTest.response.status,
+        });
+      });
+    } else if (type === SEND_MENU_TYPE.compare) {
       onSendCompare({
         request: {
           ...store.request,
@@ -102,51 +151,6 @@ const HttpRequest = ({ currentRequestId, onEdit, onSend, onSendCompare }) => {
         dispatch({
           type: 'compareResponse.body',
           payload: JSON.stringify(agentAxiosCompareResponse.compareResponse.data),
-        });
-      });
-    } else {
-      console.log('norm');
-      // 还原null
-      dispatch({
-        type: 'compareResponse.type',
-        payload: 'null',
-      });
-      onSend({
-        request: {
-          ...store.request,
-          endpoint: urlPretreatment(store.request.endpoint),
-        },
-      }).then((agentAxiosAndTest: any) => {
-        dispatch({
-          type: 'response.type',
-          payload: 'success',
-        });
-
-        dispatch({
-          type: 'response.body',
-          payload: JSON.stringify(agentAxiosAndTest.response.data),
-        });
-
-        dispatch({
-          type: 'testResult',
-          payload: agentAxiosAndTest.testResult,
-        });
-        dispatch({
-          type: 'response.headers',
-          payload: agentAxiosAndTest.response.headers,
-        });
-
-        dispatch({
-          type: 'response.meta',
-          payload: {
-            responseSize: JSON.stringify(agentAxiosAndTest.response.data).length,
-            responseDuration: new Date().getTime() - start,
-          },
-        });
-
-        dispatch({
-          type: 'response.statusCode',
-          payload: agentAxiosAndTest.response.status,
         });
       });
     }
@@ -194,7 +198,7 @@ const HttpRequest = ({ currentRequestId, onEdit, onSend, onSendCompare }) => {
       <HeaderWrapper>
         <Select
           value={store.request.method}
-          options={methods.map((i) => ({ value: i, lable: i }))}
+          options={METHODS.map((i) => ({ value: i, lable: i }))}
           onChange={(value) => {
             dispatch({
               type: 'request.method',
@@ -208,14 +212,11 @@ const HttpRequest = ({ currentRequestId, onEdit, onSend, onSendCompare }) => {
             // console.log('http://127.0.0.1:5173/arex-request/');
           }}
         />
-        {/*<Button type='primary' onClick={handleRequest}>*/}
-        {/*  {t('action.send')}*/}
-        {/*</Button>*/}
 
         <div style={{ marginLeft: '12px' }}>
           <Dropdown.Button
             type='primary'
-            onClick={() => handleRequest({ type: null })}
+            onClick={() => handleRequest(SEND_MENU_TYPE.normal)}
             menu={menu}
             icon={<DownOutlined />}
           >
