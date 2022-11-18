@@ -46,19 +46,13 @@ Http.config({
         key: 'extraTab',
         children: <div>extraTab content</div>,
       },
-    ],
-  },
-});
-
-Http.config({
-  tabs: {
-    extra: [
       {
-        label: 'anotherExtraTab',
-        key: 'anotherExtraTab',
-        children: <div>anotherExtraTab content</div>,
+        label: 'shouldBeFiltered',
+        key: 'shouldBeFiltered',
+        children: <div>This tab should be filtered</div>,
       },
     ],
+    filter: (items) => items.key !== 'shouldBeFiltered',
   },
 });
 

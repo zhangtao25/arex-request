@@ -1,7 +1,45 @@
 import { css } from '@emotion/react';
 import { useMount } from 'ahooks';
-import { Card, Col, Divider, Input, Row } from 'antd';
+import { Card, Col, Input, message, Row } from 'antd';
 import { useState } from 'react';
+
+const getRequestKey = {
+  '4': {
+    operation: 'clusterName',
+    request: 'redisKey',
+    response: 'response',
+  },
+  '5': {
+    operation: 'clazzName',
+    request: 'operationKey',
+    response: 'response',
+  },
+  '6': {
+    operation: 'service',
+    request: 'request',
+    response: 'response',
+  },
+  '7': {
+    operation: 'expCode',
+    request: 'version',
+    response: 'response',
+  },
+  '13': {
+    operation: 'url',
+    request: 'request',
+    response: 'response',
+  },
+  '14': {
+    operation: 'dbName',
+    request: 'sql',
+    response: 'response',
+  },
+  '15': {
+    operation: 'path',
+    request: 'request',
+    response: 'response',
+  },
+};
 
 function tryParseJsonString<T>(jsonString?: string, errorTip?: string) {
   try {
@@ -11,14 +49,6 @@ function tryParseJsonString<T>(jsonString?: string, errorTip?: string) {
     errorTip && message.warn(errorTip);
   }
 }
-
-// import { tryParseJsonString } from '../../../../helpers/utils';
-
-// import request from '../../../../../helpers/api/axios';
-// import { tryParseJsonString } from '../../../../../helpers/utils';
-
-// import request from '../../api/axios';
-// import { tryParseJsonString } from '../../helpers/utils';
 
 const tryPrettierJsonString = (jsonString: string, errorTip?: string) => {
   try {
@@ -40,43 +70,6 @@ const ExtraRequestTabItemMock = ({ recordId, requestAxios }) => {
       .then((res) => {
         const record = [];
         Object.keys(res.recordResult).forEach((item) => {
-          const getRequestKey = {
-            '4': {
-              operation: 'clusterName',
-              request: 'redisKey',
-              response: 'response',
-            },
-            '5': {
-              operation: 'clazzName',
-              request: 'operationKey',
-              response: 'response',
-            },
-            '6': {
-              operation: 'service',
-              request: 'request',
-              response: 'response',
-            },
-            '7': {
-              operation: 'expCode',
-              request: 'version',
-              response: 'response',
-            },
-            '13': {
-              operation: 'url',
-              request: 'request',
-              response: 'response',
-            },
-            '14': {
-              operation: 'dbName',
-              request: 'sql',
-              response: 'response',
-            },
-            '15': {
-              operation: 'path',
-              request: 'request',
-              response: 'response',
-            },
-          };
           for (let i = 0; i < res.recordResult[item].length; i++) {
             const recordResult = tryParseJsonString(res.recordResult[item][i]);
             record.push({
@@ -99,20 +92,13 @@ const ExtraRequestTabItemMock = ({ recordId, requestAxios }) => {
         overflow-y: auto;
       `}
     >
-      {JSON.stringify(dataSource.appId)}
       {dataSource.map((i) => {
         return (
-          <Card style={{ margin: '0 0 10px 0' }}>
-            <p
-              css={css`
-                font-weight: bolder;
-                margin-bottom: 10px;
-                font-size: 18px;
-              `}
-            >
-              {i.operationKey}:{i.operation}
-            </p>
-            <Divider />
+          <Card
+            key={i.recordId}
+            title={`${i.operationKey}: ${i.operation}`}
+            style={{ margin: '0 0 10px 0' }}
+          >
             <Row gutter={16}>
               <Col span={12} style={{ display: 'flex', flexDirection: 'column' }}>
                 <div
@@ -125,10 +111,9 @@ const ExtraRequestTabItemMock = ({ recordId, requestAxios }) => {
                   {i.requestKey}
                 </div>
                 <Input.TextArea
-                  style={{ height: '100%', minHeight: '200px', flex: '1' }}
-                  readOnly
                   autoSize
                   value={i.request}
+                  style={{ minHeight: '200px', flex: '1' }}
                 />
               </Col>
               <Col span={12}>
@@ -141,7 +126,7 @@ const ExtraRequestTabItemMock = ({ recordId, requestAxios }) => {
                 >
                   response
                 </div>
-                <Input.TextArea style={{ height: '100%' }} readOnly autoSize value={i.response} />
+                <Input.TextArea autoSize value={i.response} style={{ minHeight: '200px' }} />
               </Col>
             </Row>
           </Card>

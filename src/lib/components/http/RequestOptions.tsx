@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { Tabs, TabsProps, Tag } from 'antd';
 import { useContext, useState } from 'react';
 
-import { extraTabs } from '../../config';
+import { httpProfile } from '../../config';
 import ExtraRequestTabItemCompare from '../../extra/ExtraRequestTabItemCompare';
 import ExtraRequestTabItemMock from '../../extra/ExtraRequestTabItemMock';
 import { getValueByPath } from '../../helpers/utils/locale';
@@ -64,8 +64,10 @@ const HttpRequestOptions = ({ requestAxios }) => {
         <ExtraRequestTabItemMock requestAxios={requestAxios} recordId={store.request.recordId} />
       ),
     },
-    ...extraTabs,
-  ].filter((i) => !(i.key === '6' && !store.request.recordId));
+    ...httpProfile.tabs.extra,
+  ]
+    .filter((i) => !(i.key === '__mock__' && !store.request.recordId))
+    .filter(httpProfile.tabs.filter);
   return (
     <div
       css={css`
